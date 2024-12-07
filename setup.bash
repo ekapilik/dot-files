@@ -9,10 +9,6 @@ sudo apt-get update && sudo apt-get install -y \
   npm \
   stow
 
-# Install Packer
-git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
-
-# Stow neovim
 # Recursively creates symbolic links to nvim files in ~/ for .config set up
 stow -t $HOME nvim/
 
