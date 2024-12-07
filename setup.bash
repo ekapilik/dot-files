@@ -12,5 +12,9 @@ sudo apt-get update && sudo apt-get install -y \
 # Recursively creates symbolic links to nvim files in ~/ for .config set up
 stow -t $HOME nvim/
 
-# nvim install plugins
-nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerInstall'
+# Add alias to bashrc
+NV_ALIAS="alias nv='nvim'"
+if [ $(cat ~/.bashrc | grep "$NV_ALIAS" | wc -l) -eq 0 ]; then
+  echo $NV_ALIAS >> ~/.bashrc
+  source ~/.bashrc
+fi
