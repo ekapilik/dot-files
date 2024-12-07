@@ -1,4 +1,6 @@
+require "user.vim"
 require "user.plugins"
 require "user.telescope"
 require "user.mason"
 require "user.treesitter"
+require "user.colorscheme"

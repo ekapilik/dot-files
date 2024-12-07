@@ -39,6 +39,9 @@ require('packer').startup(function(use)
     requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
   }
 
+  -- Colorscheme
+  use 'lunarvim/darkplus.nvim'
+
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
   if packer_bootstrap then
