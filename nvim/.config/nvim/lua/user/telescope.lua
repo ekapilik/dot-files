@@ -23,7 +23,7 @@ telescope.setup({
 telescope.load_extension('file_browser')
 
 
--- Key Mappings for development
+------------ Key Mappings for development ------------
 
 -- Open References
 vim.keymap.set(
@@ -39,3 +39,11 @@ vim.keymap.set(
   '<cmd>lua require("telescope.builtin").lsp_definitions()<CR>',
   { desc = "LSP go to definition", noremap = true, silent = true})
 
+
+------------ Key Mappings for Git ------------
+-- Git-specific bindings
+vim.api.nvim_set_keymap('n', '<leader>gf', '<cmd>lua require("telescope.builtin").git_files()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>gb', '<cmd>lua require("telescope.builtin").git_branches()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>gs', '<cmd>lua require("telescope.builtin").git_status()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>gc', '<cmd>lua require("telescope.builtin").git_commits()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>gC', '<cmd>lua require("telescope.builtin").git_bcommits()<CR>', { noremap = true, silent = true })
