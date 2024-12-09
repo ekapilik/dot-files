@@ -39,6 +39,12 @@ require('packer').startup(function(use)
     requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
   }
 
+  -- Status line
+  use {
+    'nvim-lualine/lualine.nvim',
+    requires = { 'nvim-tree/nvim-web-devicons', opt=true }
+  }
+
   -- Colorscheme
   use 'lunarvim/darkplus.nvim'
 
