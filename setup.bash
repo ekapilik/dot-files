@@ -9,7 +9,7 @@ sudo apt-get update && sudo apt-get install -y \
   npm \
   stow
 
-pipx install \
+sudo pipx install \
   cmake-language-server
 
 # Recursively creates symbolic links to nvim files in ~/ for .config set up
