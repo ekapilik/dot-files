@@ -2,7 +2,25 @@
 
 ## Neovim Config
 
-See `:map` within neovim to see mapped keys and their function calls.
+### Keyboard Bindings
+See `:map` within neovim to see all mapped keys and their function calls.
+But here is a highlight list
+
+|-|-----------|------------------------------------------------------------|
+|Mode|Keybinding|Command|
+|   | Git Commands | |
+|n  |`<Space>gC`  | * <Cmd>lua require("telescope.builtin").git_bcommits()<CR>|
+|n  |`<Space>gc`  | * <Cmd>lua require("telescope.builtin").git_commits()<CR>|
+|n  |`<Space>gs`  | * <Cmd>lua require("telescope.builtin").git_status()<CR>|
+|n  |`<Space>gb`  | * <Cmd>lua require("telescope.builtin").git_branches()<CR>|
+|n  |`<Space>gf`  | * <Cmd>lua require("telescope.builtin").git_files()<CR>|
+|   | File navigation | |
+|n  |`<Space>lg`  | * :Telescope live_grep<CR>|
+|n  |`<Space>ff`  | * :Telescope find_files<CR>|
+|n  |`<Space>fb`  | * :Telescope file_browser<CR>|
+|   | Code Navigation | |
+|n  |`gd`         | * <Cmd>lua require("telescope.builtin").lsp_definitions()<CR>|
+|n  |`gr`         | * <Cmd>lua require("telescope.builtin").lsp_references()<CR>|
 
 ## DevPod
 Use [DevPod](https://devpod.sh/docs/getting-started/install) to host devcontainers based on their `devcontainer.json`.
