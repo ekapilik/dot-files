@@ -28,6 +28,9 @@ require('packer').startup(function(use)
   -- Format
   use 'sbdchd/neoformat'
 
+  -- AI
+  use 'github/copilot.vim'
+
   -- Fuzzy finding
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-treesitter/nvim-treesitter'
