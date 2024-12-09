@@ -1,5 +1,14 @@
 local cmp = require('cmp')
 cmp.setup({
+  window = {
+    completion = {
+      border = {'╭', '─', '╮', '│', '╯', '─', '╰', '│'}, -- rounded arc corners
+      winhighlight = "Normal:CmpPmenu,CursorLine:CmpPmenuSel,Search:None",
+    },
+    documentation = {
+      border = {'╭', '─', '╮', '│', '╯', '─', '╰', '│'}, -- rounded arc corners
+    },
+  },
   snippet = {
     expand = function(args)
       require('luasnip').lsp_expand(args.body)  -- For LuaSnip
