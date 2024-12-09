@@ -21,3 +21,21 @@ telescope.setup({
 })
 
 telescope.load_extension('file_browser')
+
+
+-- Key Mappings for development
+
+-- Open References
+vim.keymap.set(
+  "n",
+  "gr",
+  '<cmd>lua require("telescope.builtin").lsp_references()<CR>',
+  { desc = "Telescope see references", noremap = true, silent = true })
+
+-- Go to Definition
+vim.keymap.set(
+  "n",
+  "gd",
+  '<cmd>lua require("telescope.builtin").lsp_definitions()<CR>',
+  { desc = "LSP go to definition", noremap = true, silent = true})
+
