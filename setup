@@ -8,16 +8,29 @@ sudo apt-get update && sudo apt-get install -y \
   python3-pip \
   npm \
   stow
-
 sudo pipx install \
   cmake-language-server
 
 # Recursively creates symbolic links to nvim files in ~/ for .config set up
 stow -t $HOME nvim/
 
-# Add alias to bashrc
-NV_ALIAS="alias nv='nvim'"
-if [ $(cat ~/.bashrc | grep "$NV_ALIAS" | wc -l) -eq 0 ]; then
-  echo $NV_ALIAS >> ~/.bashrc
-  source ~/.bashrc
+
+##### BASHRC #####
+declare -a ALIASES=(
+"alias nv='nvim'"
+"alias v='nvim'"
+)
+bashrc_changed=0
+
+for alias in "${ALIASES[@]}"; do
+  if [ $(cat ~/.bashrc | grep "$alias" | wc -l) -eq 0 ]; then
+    echo "Adding $alias to ~/.bashrc ..."
+    echo $alias >> ~/.bashrc
+    bashrc_changed=1
+  fi
+done
+
+if [ $bashrc_changed -eq 1 ]; then
+  echo "~/.bashrc was changed. Remember to run:"
+  echo "source ~/.bashrc"
 fi
