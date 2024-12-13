@@ -5,10 +5,13 @@ if not status then
   vim.o.background = "dark"
 end
 
-
 -- statusline
-require('lualine').setup {
-  options = {
-    theme = 'codedark'
+local lualine_ok, lualine = pcall('require', 'lualine')
+if lualine_ok then
+  lualine.setup {
+    options = {
+      theme = 'codedark'
+    }
   }
-}
+end
+

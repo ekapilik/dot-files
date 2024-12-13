@@ -1,20 +1,38 @@
 #!/usr/bin/bash
 
+script_dir="$(dirname "$(realpath "$0")")"
+
 # Install Neovim and dependencies
-sudo apt-get update && sudo apt-get install -y \
-  neovim \
-  nodejs \
-  python3 \
-  python3-pip \
-  npm \
-  stow \
-  clang-format \
+packages=(
+  neovim
+  nodejs
+  python3
+  python3-pip
+  stow
+  pipx
+  clang-format
   clangd
+  ripgrep
+)
+
+if ! dpkg -s "${packages[@]}" &> /dev/null; then
+  sudo apt-get update && sudo apt-get install -y "${packages[@]}"
+else
+  echo "All packages are already installed."
+fi
+
 sudo pipx install \
   cmake-language-server
 
 # Recursively creates symbolic links to nvim files in ~/ for .config set up
+pushd $script_dir
+echo "stowing dotfiles..."
 stow -t $HOME nvim/
+stow -t $HOME tmux/
+popd
+
+# Fix permissions
+sudo chown -R $(id -u):$(id -g) $HOME/.local/share/
 
 
 ##### BASHRC #####

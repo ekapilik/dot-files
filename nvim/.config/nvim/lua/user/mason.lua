@@ -1,24 +1,36 @@
-require('mason').setup()
-require('mason-lspconfig').setup({
-  ensure_installed = {'pyright', 'lua_ls', 'clangd', 'cmake'}
-})
+local mason_ok, mason= pcall(require, 'mason')
+if mason_ok then
+  mason.setup()
+end
 
-local lspconfig = require('lspconfig')
+local mason_lspconfig_ok, mason_lspconfig = pcall(require, 'mason-lspconfig')
+if mason_lspconfig_ok then
+  mason_lspconfig.setup({
+    ensure_installed = {'pyright', 'lua_ls', 'clangd', 'cmake'}
+  })
+end
 
-lspconfig.pyright.setup{}
+local status_ok, lspconfig = pcall(require, 'lspconfig')
+if not status_ok then
+  vim.notify("lspconfig not found. Run :PackerSync", vim.log.levels.WARN)
+end
 
-lspconfig.clangd.setup({
-  cmd = { "clangd" },
-  filetypes = { "c", "cpp", "objc", "objcpp"},
-  root_dir = require('lspconfig').util.root_pattern("compile_commands.json", ".git"),
-})
-
-lspconfig.cmake.setup{
-  cmd = { "cmake-language-server" },
-  filetypes = { "cmake" },
-  root_dir = lspconfig.util.root_pattern("CMakeLists.txt", ".git"),
-}
-lspconfig.lua_ls.setup{}
+if status_ok then
+  lspconfig.pyright.setup{}
+  
+  lspconfig.clangd.setup({
+    cmd = { "clangd" },
+    filetypes = { "c", "cpp", "objc", "objcpp"},
+    root_dir = require('lspconfig').util.root_pattern("compile_commands.json", ".git"),
+  })
+  
+  lspconfig.cmake.setup{
+    cmd = { "cmake-language-server" },
+    filetypes = { "cmake" },
+    root_dir = lspconfig.util.root_pattern("CMakeLists.txt", ".git"),
+  }
+  lspconfig.lua_ls.setup{}
+end
 
 
 

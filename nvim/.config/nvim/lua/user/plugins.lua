@@ -54,10 +54,13 @@ require('packer').startup(function(use)
   -- Colorscheme
   use 'lunarvim/darkplus.nvim'
 
-  -- Automatically set up your configuration after cloning packer.nvim
-  -- Put this at the end after all plugins
-  if packer_bootstrap then
-    require('packer').sync()
-  end
 end)
+
+-- Automatically set up your configuration after cloning packer.nvim
+-- Put this at the end after all plugins
+if packer_bootstrap then
+  vim.notify("Packer bootstrap detected. Syncing packer...", vim.log.levels.INFO)
+  require('packer').sync()
+end
+
 
