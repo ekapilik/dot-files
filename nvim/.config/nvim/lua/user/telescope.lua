@@ -9,22 +9,28 @@ if not status_ok then
 end
 
 if status_ok then
+  -- Load extensions
+  telescope.load_extension('file_browser')
+  telescope.load_extension('media_files')
+
   -- Add default config
   telescope.setup({
     defaults = {
        hidden = true,
        file_ignore_patterns = { "%.git/" }
-    }, 
+    },
     extensions = {
       file_browser = {
         hidden = true,
         --path = "%:p:h",
         grouped = false,
+      },
+      media_files = {
+        filetypes = {"png"},
+        find_cmd = "rg"
       }
     }
   })
-  
-  telescope.load_extension('file_browser')
 end
 
 
