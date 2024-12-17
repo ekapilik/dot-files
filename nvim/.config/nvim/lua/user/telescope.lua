@@ -11,7 +11,6 @@ end
 if status_ok then
   -- Load extensions
   telescope.load_extension('file_browser')
-  telescope.load_extension('media_files')
 
   -- Add default config
   telescope.setup({

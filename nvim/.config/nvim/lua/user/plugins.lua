@@ -54,8 +54,6 @@ require('packer').startup(function(use)
   -- Colorscheme
   use 'lunarvim/darkplus.nvim'
 
-  use {'nvim-telescope/telescope-media-files.nvim'}
-
 end)
 
 -- Automatically set up your configuration after cloning packer.nvim
