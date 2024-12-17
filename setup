@@ -33,6 +33,7 @@ popd
 
 # Fix permissions
 sudo chown -R $(id -u):$(id -g) $HOME/.local/share/
+sudo chown -R $(id -u):$(id -g) $HOME/.local/state/
 
 
 ##### BASHRC #####
