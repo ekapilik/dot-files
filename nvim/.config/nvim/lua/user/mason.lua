@@ -17,19 +17,27 @@ end
 
 if status_ok then
   lspconfig.pyright.setup{}
-  
+
   lspconfig.clangd.setup({
     cmd = { "clangd" },
     filetypes = { "c", "cpp", "objc", "objcpp"},
     root_dir = require('lspconfig').util.root_pattern("compile_commands.json", ".git"),
   })
-  
+
   lspconfig.cmake.setup{
     cmd = { "cmake-language-server" },
     filetypes = { "cmake" },
     root_dir = lspconfig.util.root_pattern("CMakeLists.txt", ".git"),
   }
-  lspconfig.lua_ls.setup{}
+  lspconfig.lua_ls.setup{
+    settings = {
+      Lua = {
+        diagnostics = {
+          globals = { "vim" }
+        }
+      }
+    }
+  }
 end
 
 
