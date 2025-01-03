@@ -56,6 +56,7 @@ require('packer').startup(function(use)
 
   -- Colorscheme
   use 'lunarvim/darkplus.nvim'
+  use 'folke/tokyonight.nvim'
 
 end)
 

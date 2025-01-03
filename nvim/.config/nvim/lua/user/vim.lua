@@ -1,5 +1,4 @@
 vim.o.number = true
-vim.api.nvim_set_hl(0, "LineNr", { fg = "#A9A9A9" }) -- Light gray for line numbers
 
 vim.o.tabstop = 2
 vim.o.shiftwidth = 2
