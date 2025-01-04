@@ -6,5 +6,5 @@ vim.api.nvim_set_keymap('n', '<C-f>', ':Neoformat<CR>', { noremap = true, silent
 
 -- Optionally, you can also set up auto-formatting on save for C++ files
 vim.cmd([[
-  autocmd BufWritePre *.cpp,*.h Neoformat
+  autocmd BufWritePre *.cpp,*.cxx,*.h,*.hpp Neoformat
 ]])
