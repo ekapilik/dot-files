@@ -5,6 +5,7 @@ script_dir="$(dirname "$(realpath "$0")")"
 # Install Neovim and dependencies
 packages=(
   neovim
+  tmux
   npm
   nodejs
   python3
