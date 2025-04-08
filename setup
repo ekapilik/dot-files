@@ -38,6 +38,7 @@ packages=(
   clangd
   ripgrep
   unzip
+  tmux
 )
 
 if ! dpkg -s "${packages[@]}" &> /dev/null; then
