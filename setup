@@ -1,5 +1,7 @@
 #!/usr/bin/bash
 
+set -e
+
 script_dir="$(dirname "$(realpath "$0")")"
 
 #### Install latest NodeJS ####
@@ -13,6 +15,16 @@ if [ "$(printf '%s\n' "$required_node" "$current_node" | sort -V | head -n1)" !=
 else
   echo "Node.js version $current_node already satisfies 20.x+ requirement."
 fi
+
+##### INSTALL LATEST NEOVIM #####
+echo "Ensuring add-apt-repository is available..."
+sudo apt-get update
+sudo apt-get install -y software-properties-common
+
+echo "Adding Neovim PPA (unstable) for latest version..."
+sudo add-apt-repository -y ppa:neovim-ppa/unstable
+sudo apt-get update
+
 # Install Neovim and dependencies
 packages=(
   neovim
@@ -68,3 +80,5 @@ if [ $bashrc_changed -eq 1 ]; then
   echo "~/.bashrc was changed. Remember to run:"
   echo "source ~/.bashrc"
 fi
+
+echo -e "\n✅ Setup complete. Run 'nvim --version' to confirm you're on v0.10+."

@@ -12,7 +12,11 @@ end
 
 local status_ok, lspconfig = pcall(require, 'lspconfig')
 if not status_ok then
-  vim.notify("lspconfig not found. Run :PackerSync", vim.log.levels.WARN)
+  error("lspconfig not found. Run :PackerSync")
+end
+
+if vim.fn.has("nvim-0.10") ~= 1 then
+  error("nvim-lspconfig requires Nvim version 0.10")
 end
 
 if status_ok then
