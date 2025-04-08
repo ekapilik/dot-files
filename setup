@@ -2,6 +2,17 @@
 
 script_dir="$(dirname "$(realpath "$0")")"
 
+#### Install latest NodeJS ####
+current_node=$(node -v 2>/dev/null || echo "v0.0.0")
+required_node="v20.0.0"
+
+if [ "$(printf '%s\n' "$required_node" "$current_node" | sort -V | head -n1)" != "$required_node" ]; then
+  echo "Upgrading Node.js to 20.x..."
+  curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+  sudo apt-get install -y nodejs
+else
+  echo "Node.js version $current_node already satisfies 20.x+ requirement."
+fi
 # Install Neovim and dependencies
 packages=(
   neovim
