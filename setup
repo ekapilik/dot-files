@@ -28,6 +28,7 @@ sudo apt-get update
 # Install Neovim and dependencies
 packages=(
   neovim
+  tmux
   npm
   nodejs
   python3
