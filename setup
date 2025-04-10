@@ -48,8 +48,9 @@ else
   echo "All packages are already installed."
 fi
 
-sudo pipx install \
-  cmake-language-server
+# pipx
+pipx ensurepath
+pipx install cmake-language-server
 
 # Recursively creates symbolic links to nvim files in ~/ for .config set up
 pushd $script_dir
