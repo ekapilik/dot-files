@@ -29,7 +29,6 @@ sudo apt-get update
 packages=(
   neovim
   tmux
-  npm
   nodejs
   python3
   python3-pip
@@ -47,6 +46,11 @@ if ! dpkg -s "${packages[@]}" &> /dev/null; then
 else
   echo "All packages are already installed."
 fi
+
+# Enable corepack and prepare npm (avoids conflict with apt's npm)
+echo "Setting up npm using corepack..."
+sudo corepack enable
+sudo corepack prepare npm@latest --activate
 
 # pipx
 pipx ensurepath
