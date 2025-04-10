@@ -63,10 +63,12 @@ stow -t $HOME nvim/
 stow -t $HOME tmux/
 popd
 
+# ensure local user directories exist
+mkdir -p $HOME/.local/share/
+mkdir -p $HOME/.local/state/
 # Fix permissions
 sudo chown -R $(id -u):$(id -g) $HOME/.local/share/
 sudo chown -R $(id -u):$(id -g) $HOME/.local/state/
-
 
 ##### BASHRC #####
 declare -a ALIASES=(
