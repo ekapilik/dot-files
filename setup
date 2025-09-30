@@ -25,9 +25,19 @@ echo "Adding Neovim PPA (unstable) for latest version..."
 sudo add-apt-repository -y ppa:neovim-ppa/unstable
 sudo apt-get update
 
+# Ensure Neovim is >= 0.10.0
+current_nvim=$(nvim --version 2>/dev/null | head -n1 | awk '{print $2}' | sed 's/^v//' | sed 's/[^0-9.].*$//' )
+current_nvim=${current_nvim:-0.0.0}
+required_nvim="0.10.0"
+if [ "$(printf '%s\n' "$required_nvim" "$current_nvim" | sort -V | head -n1)" != "$required_nvim" ]; then
+  echo "Upgrading Neovim to >= $required_nvim ..."
+  sudo apt-get install -y neovim neovim-runtime
+else
+  echo "Neovim version v$current_nvim already satisfies $required_nvim+ requirement."
+fi
+
 # Install Neovim and dependencies
 packages=(
-  neovim
   tmux
   nodejs
   python3
