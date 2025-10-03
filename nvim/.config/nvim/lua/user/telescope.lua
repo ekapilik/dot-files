@@ -35,20 +35,25 @@ end
 
 ------------ Key Mappings for development ------------
 
--- Open References
-vim.keymap.set(
-  "n",
-  "gr",
-  '<cmd>lua require("telescope.builtin").lsp_references()<CR>',
-  { desc = "Telescope see references", noremap = true, silent = true })
+-- Go to definition (Telescope)
+vim.keymap.set("n", "gd", require("telescope.builtin").lsp_definitions, { desc = "LSP Go to Definition" })
 
--- Go to Definition
-vim.keymap.set(
-  "n",
-  "gd",
-  '<cmd>lua require("telescope.builtin").lsp_definitions()<CR>',
-  { desc = "LSP go to definition", noremap = true, silent = true})
+-- References (Telescope)
+vim.keymap.set("n", "gr", require("telescope.builtin").lsp_references, { desc = "LSP See References" })
 
+-- Implementations (Telescope)
+vim.keymap.set("n", "gi", require("telescope.builtin").lsp_implementations, { desc = "LSP See Implementations" })
+
+-- Symbol rename
+vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "LSP Rename" })
+
+-- Diagnostics (Telescope)
+vim.keymap.set("n", "<leader>e", require("telescope.builtin").diagnostics, { desc = "Project Diagnostics" })
+
+-- Diagnostics (Vanilla)
+vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { desc = "Line Diagnostics" })
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Prev Diagnostic" })
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Next Diagnostic" })
 
 ------------ Key Mappings for Git ------------
 -- Git-specific bindings

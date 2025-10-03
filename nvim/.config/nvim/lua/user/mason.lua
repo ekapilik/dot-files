@@ -6,7 +6,7 @@ end
 local mason_lspconfig_ok, mason_lspconfig = pcall(require, 'mason-lspconfig')
 if mason_lspconfig_ok then
   mason_lspconfig.setup({
-    ensure_installed = {'pyright', 'lua_ls', 'clangd', 'cmake'}
+    ensure_installed = {'pyright', 'lua_ls', 'clangd', 'cmake', 'rust_analyzer'}
   })
 end
 
@@ -39,6 +39,18 @@ if status_ok then
         diagnostics = {
           globals = { "vim" }
         }
+      }
+    }
+  }
+
+  lspconfig.rust_analyzer.setup{
+    settings = {
+      ["rust-analyzer"] = {
+        cargo = { allFeatures = true },
+        checkOnSave = true,
+        check = {
+          command = "clippy",
+        },
       }
     }
   }
