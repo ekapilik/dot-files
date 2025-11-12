@@ -84,6 +84,9 @@ sudo chown -R $(id -u):$(id -g) $HOME/.local/state/
 declare -a ALIASES=(
 "alias nv='nvim'"
 "alias v='nvim'"
+"alias cb='cargo build'"
+"alias cr='cargo run'"
+"alias ct='cargo test'"
 )
 bashrc_changed=0
 
