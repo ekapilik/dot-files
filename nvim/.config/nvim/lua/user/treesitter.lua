@@ -1,20 +1,16 @@
---require('nvim-treesitter.configs').setup {
---  ensure_installed = {
---    "lua", "python", "javascript", "typescript", "html", "css", "bash", "json", "rust"
---  },
---  auto_install = true,
---}
+local ts = require("nvim-treesitter")
 
-local status_ok, configs = pcall(require, "nvim-treesitter.configs")
-if not status_ok then
-  vim.notify("treesitter not found. Run :PackerSync", vim.log.levels.WARN)
-end
+ts.install({
+  "c", "cpp", "lua", "python", "javascript", "typescript",
+  "html", "css", "bash", "json", "rust",
+})
 
-if status_ok then
-  configs.setup {
-    ensure_installed = {
-      "lua", "python", "javascript", "typescript", "html", "css", "bash", "json", "rust"
-    },
-    auto_install = true,
-  }
-end
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = {
+    "c", "cpp", "lua", "python", "javascript", "typescript",
+    "html", "css", "bash", "json", "rust",
+  },
+  callback = function()
+    vim.treesitter.start()
+  end,
+})

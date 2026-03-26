@@ -3,34 +3,22 @@ vim.keymap.set("n", "<space>fb", ":Telescope file_browser<CR>")
 vim.keymap.set("n", "<space>ff", ":Telescope find_files<CR>")
 vim.keymap.set("n", "<space>lg", ":Telescope live_grep<CR>")
 
-local status_ok, telescope = pcall(require, 'telescope')
-if not status_ok then
-  vim.notify("Telescope not found. Run :PackerSync", vim.log.levels.WARN)
-end
+local telescope = require("telescope")
 
-if status_ok then
-  -- Load extensions
-  telescope.load_extension('file_browser')
-
-  -- Add default config
-  telescope.setup({
-    defaults = {
-       hidden = true,
-       file_ignore_patterns = { "%.git/" }
+telescope.setup({
+  defaults = {
+    hidden = true,
+    file_ignore_patterns = { "%.git/" },
+  },
+  extensions = {
+    file_browser = {
+      hidden = true,
+      grouped = false,
     },
-    extensions = {
-      file_browser = {
-        hidden = true,
-        --path = "%:p:h",
-        grouped = false,
-      },
-      media_files = {
-        filetypes = {"png"},
-        find_cmd = "rg"
-      }
-    }
-  })
-end
+  },
+})
+
+telescope.load_extension("file_browser")
 
 
 ------------ Key Mappings for development ------------

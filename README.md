@@ -6,21 +6,32 @@
 See `:map` within neovim to see all mapped keys and their function calls.
 But, here is a highlight list:
 
-|Mode|Keybinding|Command|
+|Mode|Keybinding|Action|
 |-|-|-|
 | **Git Commands** |||
-|n  |`<Space>gC`  | * <Cmd>lua require("telescope.builtin").git_bcommits()<CR>|
-|n  |`<Space>gc`  | * <Cmd>lua require("telescope.builtin").git_commits()<CR>|
-|n  |`<Space>gs`  | * <Cmd>lua require("telescope.builtin").git_status()<CR>|
-|n  |`<Space>gb`  | * <Cmd>lua require("telescope.builtin").git_branches()<CR>|
-|n  |`<Space>gf`  | * <Cmd>lua require("telescope.builtin").git_files()<CR>|
+|n  |`<Space>gC`  | Buffer git commits (Telescope)|
+|n  |`<Space>gc`  | Git commits (Telescope)|
+|n  |`<Space>gs`  | Git status (Telescope)|
+|n  |`<Space>gb`  | Git branches (Telescope)|
+|n  |`<Space>gf`  | Git files (Telescope)|
 | **File navigation** |||
-|n  |`<Space>lg`  | * :Telescope live_grep<CR>|
-|n  |`<Space>ff`  | * :Telescope find_files<CR>|
-|n  |`<Space>fb`  | * :Telescope file_browser<CR>|
-| **Code  navigation** |||
-|n  |`gd`         | * <Cmd>lua require("telescope.builtin").lsp_definitions()<CR>|
-|n  |`gr`         | * <Cmd>lua require("telescope.builtin").lsp_references()<CR>|
+|n  |`<Space>lg`  | Live grep (Telescope)|
+|n  |`<Space>ff`  | Find files (Telescope)|
+|n  |`<Space>fb`  | File browser (Telescope)|
+| **Code navigation (LSP)** |||
+|n  |`gd`         | Go to definition (Telescope)|
+|n  |`gr`         | Find references (Telescope)|
+|n  |`gD`         | Go to declaration|
+|n  |`K`          | Hover docs|
+|n  |`<Space>rn`  | Rename symbol|
+|n  |`<Space>ca`  | Code actions|
+|n  |`<Space>e`   | Show diagnostic float|
+|n  |`[d`         | Previous diagnostic|
+|n  |`]d`         | Next diagnostic|
+| **Formatting** |||
+|n  |`Ctrl+f`     | Format file (Neoformat)|
+| **LeetCode** |||
+|n  |`:Leet`      | Open LeetCode dashboard|
 
 ## DevPod
 Use [DevPod](https://devpod.sh/docs/getting-started/install) to host devcontainers based on their `devcontainer.json`.
