@@ -48,7 +48,7 @@ packages=(
   clangd
   ripgrep
   unzip
-  tmux
+  zsh
 )
 
 if ! dpkg -s "${packages[@]}" &> /dev/null; then
@@ -61,16 +61,25 @@ fi
 echo "Setting up npm using corepack..."
 sudo corepack enable
 sudo corepack prepare npm@latest --activate
+# Install with npm
+sudo npm install -g tree-sitter-cli
 
 # pipx
 pipx ensurepath
 pipx install cmake-language-server
 
-# Recursively creates symbolic links to nvim files in ~/ for .config set up
+# Recursively creates symbolic links to dotfiles in ~/
 pushd $script_dir
 echo "stowing dotfiles..."
 stow -t $HOME nvim/
 stow -t $HOME tmux/
+
+# Back up any pre-existing .zshrc that isn't already our symlink
+if [ -f "$HOME/.zshrc" ] && [ ! -L "$HOME/.zshrc" ]; then
+  echo "Backing up existing ~/.zshrc to ~/.zshrc.bak"
+  mv "$HOME/.zshrc" "$HOME/.zshrc.bak"
+fi
+stow -t $HOME zsh/
 popd
 
 # ensure local user directories exist
@@ -79,28 +88,5 @@ mkdir -p $HOME/.local/state/
 # Fix permissions
 sudo chown -R $(id -u):$(id -g) $HOME/.local/share/
 sudo chown -R $(id -u):$(id -g) $HOME/.local/state/
-
-##### BASHRC #####
-declare -a ALIASES=(
-"alias nv='nvim'"
-"alias v='nvim'"
-"alias cb='cargo build'"
-"alias cr='cargo run'"
-"alias ct='cargo test'"
-)
-bashrc_changed=0
-
-for alias in "${ALIASES[@]}"; do
-  if [ $(cat ~/.bashrc | grep "$alias" | wc -l) -eq 0 ]; then
-    echo "Adding $alias to ~/.bashrc ..."
-    echo $alias >> ~/.bashrc
-    bashrc_changed=1
-  fi
-done
-
-if [ $bashrc_changed -eq 1 ]; then
-  echo "~/.bashrc was changed. Remember to run:"
-  echo "source ~/.bashrc"
-fi
 
 echo -e "\n✅ Setup complete. Run 'nvim --version' to confirm you're on v0.10+."
