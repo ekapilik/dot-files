@@ -33,6 +33,22 @@ But, here is a highlight list:
 | **LeetCode** |||
 |n  |`:Leet`      | Open LeetCode dashboard|
 
+## WezTerm Config
+
+The WezTerm config lives in `wezterm/.config/wezterm/wezterm.lua` and is stow'd to `~/.config/wezterm/` on Linux.
+
+WezTerm runs as a Windows process, so it needs a minimal bootstrap on the Windows side that delegates to the Linux config via the WSL filesystem.
+
+**Windows bootstrap** — create `C:\Users\<you>\.wezterm.lua` with:
+```lua
+return dofile('\\\\wsl.localhost\\Ubuntu-24.04\\home\\eric\\dev\\.dot-files\\wezterm\\.config\\wezterm\\wezterm.lua')
+```
+
+> Update the distro name (`Ubuntu-24.04`) and username (`eric`) if they differ on your machine.
+
+**Prerequisites:**
+- [JetBrains Mono](https://www.jetbrains.com/lp/mono/) installed as a Windows font (WezTerm reads fonts from the Windows font system)
+
 ## DevPod
 Use [DevPod](https://devpod.sh/docs/getting-started/install) to host devcontainers based on their `devcontainer.json`.
 
