@@ -67,4 +67,11 @@ window_tint.apply_to_config(config, {
   set_retro_tab_bar = true,
 })
 
+-- ============================================================
+-- Claude usage quota in the right status bar
+-- (https://github.com/EdenGibson/wezterm-quota-limit)
+-- ============================================================
+local quota = wezterm.plugin.require 'https://github.com/EdenGibson/wezterm-quota-limit'
+quota.apply_to_config(config)
+
 return config

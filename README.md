@@ -58,6 +58,7 @@ clones and caches each repo on first launch — no extra install step needed.
 - [Rosé Pine](https://github.com/neapsix/wezterm) — theme, registers Main/Moon/Dawn variants.
 - [wezterm-theme-rotator](https://github.com/koh-sh/wezterm-theme-rotator) — cycle WezTerm's built-in themes with `Super+Shift+N/P` (next/prev), `Super+Shift+R` (random), `Super+Shift+D` (back to default).
 - [Wezterm-Window-Tint](https://github.com/willytop8/Wezterm-Window-Tint) — tints the window/tab bar per project based on git root.
+- [wezterm-quota-limit](https://github.com/EdenGibson/wezterm-quota-limit) — shows Claude Code API usage quota (5h/7d windows) in the right status bar. Reads credentials from the macOS Keychain or `~/.claude/.credentials.json`.
 
 To switch the active theme by hand, set `config.color_scheme` in `wezterm.lua` to any of `Kanagawa Wave`, `Kanagawa Dragon`, `Kanagawa Lotus`, `Rose Pine`, `Rose Pine Moon`, or `Rose Pine Dawn`, or any WezTerm built-in scheme.
 
