@@ -18,8 +18,6 @@ config.default_domain = 'WSL:Ubuntu-24.04'
 -- ============================================================
 -- Appearance
 -- ============================================================
-config.color_scheme = 'Catppuccin Mocha'
-
 config.font = wezterm.font('JetBrains Mono', { weight = 'Regular' })
 config.font_size = 12.0
 
@@ -31,30 +29,42 @@ config.win32_system_backdrop = 'Acrylic'
 config.hide_tab_bar_if_only_one_tab = true
 config.use_fancy_tab_bar = false
 
-config.colors = {
-  tab_bar = {
-    background = '#1e1e2e',
-    active_tab = {
-      bg_color = '#313244',
-      fg_color = '#cdd6f4',
-    },
-    inactive_tab = {
-      bg_color = '#1e1e2e',
-      fg_color = '#6c7086',
-    },
-    inactive_tab_hover = {
-      bg_color = '#313244',
-      fg_color = '#cdd6f4',
-    },
-    new_tab = {
-      bg_color = '#1e1e2e',
-      fg_color = '#6c7086',
-    },
-    new_tab_hover = {
-      bg_color = '#313244',
-      fg_color = '#cdd6f4',
-    },
-  },
-}
+-- ============================================================
+-- Themes
+-- ============================================================
+-- Kanagawa: registers "Kanagawa Wave", "Kanagawa Dragon", "Kanagawa Lotus"
+-- into config.color_schemes (https://github.com/sravioli/kanagawa.wz)
+local kanagawa = wezterm.plugin.require 'https://github.com/sravioli/kanagawa.wz'
+kanagawa.register(config)
+
+-- Rosé Pine: registers "Rose Pine", "Rose Pine Moon", "Rose Pine Dawn"
+-- (https://github.com/neapsix/wezterm). Registered by name in color_schemes
+-- rather than assigned to config.colors directly, since a plain color_scheme
+-- name takes precedence over config.colors and would otherwise be ignored.
+local rose_pine = wezterm.plugin.require 'https://github.com/neapsix/wezterm'
+config.color_schemes = config.color_schemes or {}
+config.color_schemes['Rose Pine'] = rose_pine.main.colors()
+config.color_schemes['Rose Pine Moon'] = rose_pine.moon.colors()
+config.color_schemes['Rose Pine Dawn'] = rose_pine.dawn.colors()
+
+config.color_scheme = 'Kanagawa Wave'
+
+-- ============================================================
+-- Theme rotator: Super+Shift+N/P cycle themes, +R random, +D default
+-- (https://github.com/koh-sh/wezterm-theme-rotator). Note: it cycles
+-- WezTerm's built-in schemes only, not the custom ones registered above.
+-- ============================================================
+local theme_rotator = wezterm.plugin.require 'https://github.com/koh-sh/wezterm-theme-rotator'
+theme_rotator.apply_to_config(config)
+
+-- ============================================================
+-- Window tint: project-aware window/tab-bar coloring based on git root
+-- (https://github.com/willytop8/Wezterm-Window-Tint)
+-- ============================================================
+local window_tint = wezterm.plugin.require 'https://github.com/willytop8/Wezterm-Window-Tint'
+window_tint.apply_to_config(config, {
+  show_badge = true,
+  set_retro_tab_bar = true,
+})
 
 return config

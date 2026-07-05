@@ -49,6 +49,20 @@ return dofile('\\\\wsl.localhost\\Ubuntu-24.04\\home\\eric\\dev\\.dot-files\\wez
 **Prerequisites:**
 - [JetBrains Mono](https://www.jetbrains.com/lp/mono/) installed as a Windows font (WezTerm reads fonts from the Windows font system)
 
+### Plugins
+
+Loaded via WezTerm's built-in plugin manager (`wezterm.plugin.require`), which
+clones and caches each repo on first launch — no extra install step needed.
+
+- [Kanagawa](https://github.com/sravioli/kanagawa.wz) — theme, registers Wave/Dragon/Lotus variants. **Active by default.**
+- [Rosé Pine](https://github.com/neapsix/wezterm) — theme, registers Main/Moon/Dawn variants.
+- [wezterm-theme-rotator](https://github.com/koh-sh/wezterm-theme-rotator) — cycle WezTerm's built-in themes with `Super+Shift+N/P` (next/prev), `Super+Shift+R` (random), `Super+Shift+D` (back to default).
+- [Wezterm-Window-Tint](https://github.com/willytop8/Wezterm-Window-Tint) — tints the window/tab bar per project based on git root.
+
+To switch the active theme by hand, set `config.color_scheme` in `wezterm.lua` to any of `Kanagawa Wave`, `Kanagawa Dragon`, `Kanagawa Lotus`, `Rose Pine`, `Rose Pine Moon`, or `Rose Pine Dawn`, or any WezTerm built-in scheme.
+
+To update all plugins, run `wezterm.plugin.update_all()` from WezTerm's debug overlay (`Ctrl+Shift+L`).
+
 ## DevPod
 Use [DevPod](https://devpod.sh/docs/getting-started/install) to host devcontainers based on their `devcontainer.json`.
 
