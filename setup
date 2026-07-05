@@ -73,6 +73,7 @@ pushd $script_dir
 echo "stowing dotfiles..."
 stow -t $HOME nvim/
 stow -t $HOME tmux/
+stow -t $HOME wezterm/
 
 # Back up any pre-existing .zshrc that isn't already our symlink
 if [ -f "$HOME/.zshrc" ] && [ ! -L "$HOME/.zshrc" ]; then
