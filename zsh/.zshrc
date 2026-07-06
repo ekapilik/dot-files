@@ -57,6 +57,14 @@ export FZF_DEFAULT_COMMAND='fd'
 export LIBGL_ALWAYS_SOFTWARE=1
 export PULSE_SERVER=unix:/mnt/wslg/PulseServer
 
+# WezTerm: emit OSC 7 on cwd change so Wezterm-Window-Tint retints live
+_osc7_cwd() {
+  printf '\e]7;file://%s%s\e\\' "${HOST:-localhost}" "$PWD"
+}
+autoload -Uz add-zsh-hook
+add-zsh-hook chpwd _osc7_cwd
+add-zsh-hook precmd _osc7_cwd
+
 # SSH agent
 if ! pgrep -u "$USER" ssh-agent > /dev/null; then
   eval "$(ssh-agent -s)"
