@@ -26,7 +26,7 @@ config.window_background_opacity = 0.9
 config.win32_system_backdrop = 'Acrylic'
 
 -- Tab bar
-config.hide_tab_bar_if_only_one_tab = true
+config.hide_tab_bar_if_only_one_tab = false
 config.use_fancy_tab_bar = false
 
 -- ============================================================
