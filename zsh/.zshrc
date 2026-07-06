@@ -1,8 +1,3 @@
-# Prompt
-autoload -Uz promptinit
-promptinit
-prompt adam1
-
 # History
 setopt histignorealldups histignorespace sharehistory appendhistory
 HISTSIZE=10000
@@ -46,6 +41,9 @@ alias egrep='egrep --color=auto'
 export PATH="${PATH}:/home/eric/dev/.scripts"
 export PATH="$(npm prefix -g 2>/dev/null)/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
+
+# Prompt
+eval "$(starship init zsh)"
 
 # Rust
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"

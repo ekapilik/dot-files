@@ -18,7 +18,7 @@ config.default_domain = 'WSL:Ubuntu-24.04'
 -- ============================================================
 -- Appearance
 -- ============================================================
-config.font = wezterm.font('JetBrains Mono', { weight = 'Regular' })
+config.font = wezterm.font('JetBrainsMono Nerd Font', { weight = 'Regular' })
 config.font_size = 12.0
 
 -- Windows Acrylic blur

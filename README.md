@@ -33,6 +33,12 @@ But, here is a highlight list:
 | **LeetCode** |||
 |n  |`:Leet`      | Open LeetCode dashboard|
 
+## Zsh Prompt
+
+The prompt is [Starship](https://starship.rs), configured at `starship/.config/starship.toml` and stow'd to `~/.config/starship.toml`. `zsh/.zshrc` initializes it with `eval "$(starship init zsh)"`. The `setup` script installs the `starship` binary if it's missing.
+
+It's a powerline-style prompt (OS icon → directory → git branch/status → language versions → docker context → time), using glyphs from a [Nerd Font](https://www.nerdfonts.com/). This repo's WezTerm config points at **JetBrainsMono Nerd Font** (`wezterm.lua:21`), so install it as a Windows font (WezTerm reads fonts from the Windows font system, same as the plain JetBrains Mono font it replaces) — grab it from the [Nerd Fonts releases page](https://github.com/ryanoasis/nerd-fonts/releases) (`JetBrainsMono.zip`).
+
 ## WezTerm Config
 
 The WezTerm config lives in `wezterm/.config/wezterm/wezterm.lua` and is stow'd to `~/.config/wezterm/` on Linux.
@@ -47,7 +53,7 @@ return dofile('\\\\wsl.localhost\\Ubuntu-24.04\\home\\eric\\dev\\.dot-files\\wez
 > Update the distro name (`Ubuntu-24.04`) and username (`eric`) if they differ on your machine.
 
 **Prerequisites:**
-- [JetBrains Mono](https://www.jetbrains.com/lp/mono/) installed as a Windows font (WezTerm reads fonts from the Windows font system)
+- JetBrainsMono Nerd Font installed as a Windows font (WezTerm reads fonts from the Windows font system) — see [Zsh Prompt](#zsh-prompt) below
 
 ### Plugins
 

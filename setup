@@ -57,6 +57,14 @@ else
   echo "All packages are already installed."
 fi
 
+##### INSTALL STARSHIP #####
+if ! command -v starship &> /dev/null; then
+  echo "Installing starship..."
+  curl -sS https://starship.rs/install.sh | sh -s -- --yes
+else
+  echo "starship already installed."
+fi
+
 # Enable corepack and prepare npm (avoids conflict with apt's npm)
 echo "Setting up npm using corepack..."
 sudo corepack enable
@@ -74,6 +82,7 @@ echo "stowing dotfiles..."
 stow -t $HOME nvim/
 stow -t $HOME tmux/
 stow -t $HOME wezterm/
+stow -t $HOME starship/
 
 # Back up any pre-existing .zshrc that isn't already our symlink
 if [ -f "$HOME/.zshrc" ] && [ ! -L "$HOME/.zshrc" ]; then
