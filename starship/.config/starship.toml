@@ -1,79 +1,79 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
 format = """
-[](fg:#9A348E)\
+[](fg:#938AA9)\
 $os\
-[](fg:#9A348E bg:#DA627D)\
+[](fg:#938AA9 bg:#D27E99)\
 $directory\
-[](fg:#DA627D bg:#FCA17D)\
+[](fg:#D27E99 bg:#C0A36E)\
 $git_branch\
 $git_status\
-[](fg:#FCA17D bg:#86BBD8)\
+[](fg:#C0A36E bg:#6A9589)\
 $c\
 $cpp\
 $rust\
 $nodejs\
 $python\
-[](fg:#86BBD8 bg:#06969A)\
+[](fg:#6A9589 bg:#7FB4CA)\
 $docker_context\
-[](fg:#06969A bg:#33658A)\
+[](fg:#7FB4CA bg:#2D4F67)\
 $time\
-[ ](fg:#33658A)\
+[ ](fg:#2D4F67)\
 """
 
 # always-on so the leading powerline arrow has a deterministic first block
 [os]
 disabled = false
-style = "bg:#9A348E"
+style = "bg:#938AA9"
 format = '[ $symbol ]($style)'
 
 [directory]
-style = "bg:#DA627D"
+style = "bg:#D27E99"
 format = "[ $path ]($style)"
 truncation_length = 3
 truncation_symbol = "…/"
 
 [git_branch]
 symbol = ""
-style = "bg:#FCA17D"
+style = "bg:#C0A36E"
 format = '[ $symbol $branch ]($style)'
 
 [git_status]
-style = "bg:#FCA17D"
+style = "bg:#C0A36E"
 format = '[$all_status$ahead_behind ]($style)'
 
 [c]
 symbol = " "
-style = "bg:#86BBD8"
+style = "bg:#6A9589"
 format = '[ $symbol ($version) ]($style)'
 
 [cpp]
 symbol = " "
-style = "bg:#86BBD8"
+style = "bg:#6A9589"
 format = '[ $symbol ($version) ]($style)'
 
 [rust]
 symbol = ""
-style = "bg:#86BBD8"
+style = "bg:#6A9589"
 format = '[ $symbol ($version) ]($style)'
 
 [nodejs]
 symbol = ""
-style = "bg:#86BBD8"
+style = "bg:#6A9589"
 format = '[ $symbol ($version) ]($style)'
 
 [python]
 symbol = ""
-style = "bg:#86BBD8"
+style = "bg:#6A9589"
 format = '[ $symbol ($version) ]($style)'
 
 [docker_context]
 symbol = " "
-style = "bg:#06969A"
+style = "bg:#7FB4CA"
 format = '[ $symbol $context ]($style)'
 
 [time]
 disabled = false
 time_format = "%R"
-style = "bg:#33658A"
+style = "bg:#2D4F67"
 format = '[ 󰥔 $time ]($style)'
