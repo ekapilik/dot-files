@@ -19,6 +19,8 @@ $docker_context\
 [](fg:#7FB4CA bg:#2D4F67)\
 $time\
 [ ](fg:#2D4F67)\
+$line_break\
+$character\
 """
 
 # always-on so the leading powerline arrow has a deterministic first block
@@ -77,3 +79,7 @@ disabled = false
 time_format = "%R"
 style = "bg:#2D4F67"
 format = '[ 󰥔 $time ]($style)'
+
+[character]
+success_symbol = "[❯](bold #98BB6C)"
+error_symbol = "[❯](bold #E82424)"
