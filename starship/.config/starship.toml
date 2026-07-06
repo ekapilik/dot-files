@@ -1,29 +1,29 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
 format = """
-[](fg:#938AA9)\
+[](fg:#4078F2)\
 $os\
 $hostname\
 $container\
-[](fg:#938AA9 bg:#D27E99)\
+[](fg:#4078F2 bg:#0184BC)\
 $directory\
-[](fg:#D27E99 bg:#C0A36E)\
+[](fg:#0184BC bg:#A626A4)\
 $git_branch\
 $git_status\
 $git_metrics\
-[](fg:#C0A36E bg:#6A9589)\
+[](fg:#A626A4 bg:#C18401)\
 $c\
 $cpp\
 $rust\
 $nodejs\
 $python\
-[](fg:#6A9589 bg:#7FB4CA)\
+[](fg:#C18401 bg:#50A14F)\
 $docker_context\
-[](fg:#7FB4CA bg:#658594)\
+[](fg:#50A14F bg:#CA1243)\
 $cmd_duration\
-[](fg:#658594 bg:#2D4F67)\
+[](fg:#CA1243 bg:#526EFF)\
 $time\
-[ ](fg:#2D4F67)\
+[ ](fg:#526EFF)\
 $line_break\
 $character\
 """
@@ -31,80 +31,80 @@ $character\
 # always-on so the leading powerline arrow has a deterministic first block
 [os]
 disabled = false
-style = "bg:#938AA9"
+style = "bg:#4078F2"
 format = '[ $symbol ]($style)'
 
 [hostname]
 ssh_only = true
-style = "bg:#938AA9"
+style = "bg:#4078F2"
 format = '[ $hostname ]($style)'
 
 [container]
-style = "bg:#938AA9"
+style = "bg:#4078F2"
 format = '[ $symbol$name ]($style)'
 
 [directory]
-style = "bg:#D27E99"
+style = "bg:#0184BC"
 format = "[ $path ]($style)"
 truncation_length = 3
 truncation_symbol = "…/"
 
 [git_branch]
 symbol = ""
-style = "bg:#C0A36E"
+style = "bg:#A626A4"
 format = '[ $symbol $branch ]($style)'
 
 [git_status]
-style = "bg:#C0A36E"
+style = "bg:#A626A4"
 format = '[$all_status$ahead_behind ]($style)'
 
 [git_metrics]
 disabled = false
-added_style = "bold #98BB6C bg:#C0A36E"
-deleted_style = "bold #E82424 bg:#C0A36E"
+added_style = "bold #50A14F bg:#A626A4"
+deleted_style = "bold #E45649 bg:#A626A4"
 format = '([+$added ]($added_style))([-$deleted ]($deleted_style))'
 
 [c]
 symbol = " "
-style = "bg:#6A9589"
+style = "bg:#C18401"
 format = '[ $symbol ($version) ]($style)'
 
 [cpp]
 symbol = " "
-style = "bg:#6A9589"
+style = "bg:#C18401"
 format = '[ $symbol ($version) ]($style)'
 
 [rust]
 symbol = ""
-style = "bg:#6A9589"
+style = "bg:#C18401"
 format = '[ $symbol ($version) ]($style)'
 
 [nodejs]
 symbol = ""
-style = "bg:#6A9589"
+style = "bg:#C18401"
 format = '[ $symbol ($version) ]($style)'
 
 [python]
 symbol = ""
-style = "bg:#6A9589"
+style = "bg:#C18401"
 format = '[ $symbol ($version) ]($style)'
 
 [docker_context]
 symbol = " "
-style = "bg:#7FB4CA"
+style = "bg:#50A14F"
 format = '[ $symbol $context ]($style)'
 
 [cmd_duration]
 min_time = 2000
-style = "bg:#658594"
+style = "bg:#CA1243"
 format = '[ 󰔟 $duration ]($style)'
 
 [time]
 disabled = false
 time_format = "%R"
-style = "bg:#2D4F67"
+style = "bg:#526EFF"
 format = '[ 󰥔 $time ]($style)'
 
 [character]
-success_symbol = "[❯](bold #98BB6C)"
-error_symbol = "[❯](bold #E82424)"
+success_symbol = "[❯](bold #50A14F)"
+error_symbol = "[❯](bold #E45649)"
