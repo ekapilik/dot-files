@@ -30,7 +30,7 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
 # Colors
 alias ls='ls --color=auto'
-alias ll='ls -alF'
+alias ll='eza -la --icons --group-directories-first --git'
 alias la='ls -A'
 alias l='ls -CF'
 alias grep='grep --color=auto'

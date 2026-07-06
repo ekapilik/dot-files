@@ -49,6 +49,7 @@ packages=(
   ripgrep
   unzip
   zsh
+  eza
 )
 
 if ! dpkg -s "${packages[@]}" &> /dev/null; then
