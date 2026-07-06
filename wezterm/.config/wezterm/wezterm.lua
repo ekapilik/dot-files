@@ -37,6 +37,19 @@ config.use_fancy_tab_bar = false
 local kanagawa = wezterm.plugin.require 'https://github.com/sravioli/kanagawa.wz'
 kanagawa.register(config)
 
+-- kanagawa.wz bakes in input_selector_label_*/launcher_label_* palette keys
+-- that only exist on nightly WezTerm builds; strip them on stable so they
+-- don't spam "not a valid Palette field" errors on every launch.
+for _, name in ipairs { 'Kanagawa Wave', 'Kanagawa Dragon', 'Kanagawa Lotus' } do
+  local scheme = config.color_schemes[name]
+  if scheme then
+    scheme.input_selector_label_bg = nil
+    scheme.input_selector_label_fg = nil
+    scheme.launcher_label_bg = nil
+    scheme.launcher_label_fg = nil
+  end
+end
+
 -- Rosé Pine: registers "Rose Pine", "Rose Pine Moon", "Rose Pine Dawn"
 -- (https://github.com/neapsix/wezterm). Registered by name in color_schemes
 -- rather than assigned to config.colors directly, since a plain color_scheme
@@ -50,12 +63,88 @@ config.color_schemes['Rose Pine Dawn'] = rose_pine.dawn.colors()
 config.color_scheme = 'Kanagawa Wave'
 
 -- ============================================================
--- Theme rotator: Super+Shift+N/P cycle themes, +R random, +D default
--- (https://github.com/koh-sh/wezterm-theme-rotator). Note: it cycles
--- WezTerm's built-in schemes only, not the custom ones registered above.
+-- Theme rotator: Super+Shift+N/P cycle themes, +R random, +D default.
+-- Vendored inline rather than loading
+-- https://github.com/koh-sh/wezterm-theme-rotator directly: upstream also
+-- hooks the status bar to show the current theme, which fights
+-- wezterm-quota-limit for the right status bar (both overwrite
+-- set_right_status on every refresh tick). This trimmed version keeps
+-- only the keybindings + toast notifications so quota owns the status
+-- bar outright. It still cycles WezTerm's built-in schemes only, not the
+-- custom ones registered above.
 -- ============================================================
-local theme_rotator = wezterm.plugin.require 'https://github.com/koh-sh/wezterm-theme-rotator'
-theme_rotator.apply_to_config(config)
+do
+  local builtin_themes = {}
+  for name, _ in pairs(wezterm.color.get_builtin_schemes()) do
+    table.insert(builtin_themes, name)
+  end
+  table.sort(builtin_themes)
+
+  local default_theme = config.color_scheme
+  local current_index = 1
+  for i, name in ipairs(builtin_themes) do
+    if name == default_theme then
+      current_index = i
+      break
+    end
+  end
+
+  local function find_index(theme_name)
+    for i, name in ipairs(builtin_themes) do
+      if name == theme_name then
+        return i
+      end
+    end
+    return 1
+  end
+
+  local function apply_theme(window, new_index, operation_name)
+    current_index = new_index
+    local theme_name = builtin_themes[current_index]
+    window:set_config_overrides { color_scheme = theme_name }
+    window:toast_notification('WezTerm Theme', operation_name .. ': ' .. theme_name, nil, 4000)
+  end
+
+  config.keys = config.keys or {}
+
+  table.insert(config.keys, {
+    key = 'n',
+    mods = 'SUPER|SHIFT',
+    action = wezterm.action_callback(function(window)
+      apply_theme(window, (current_index % #builtin_themes) + 1, 'Next theme')
+    end),
+  })
+  table.insert(config.keys, {
+    key = 'p',
+    mods = 'SUPER|SHIFT',
+    action = wezterm.action_callback(function(window)
+      local new_index = current_index - 1
+      if new_index < 1 then
+        new_index = #builtin_themes
+      end
+      apply_theme(window, new_index, 'Previous theme')
+    end),
+  })
+  table.insert(config.keys, {
+    key = 'r',
+    mods = 'SUPER|SHIFT',
+    action = wezterm.action_callback(function(window)
+      math.randomseed(os.time())
+      local new_index = current_index
+      while new_index == current_index do
+        new_index = math.random(1, #builtin_themes)
+      end
+      apply_theme(window, new_index, 'Random theme')
+    end),
+  })
+  table.insert(config.keys, {
+    key = 'd',
+    mods = 'SUPER|SHIFT',
+    action = wezterm.action_callback(function(window)
+      apply_theme(window, find_index(default_theme), 'Default theme')
+    end),
+  })
+end
 
 -- ============================================================
 -- Window tint: project-aware window/tab-bar coloring based on git root
