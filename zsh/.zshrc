@@ -56,8 +56,12 @@ export LIBGL_ALWAYS_SOFTWARE=1
 export PULSE_SERVER=unix:/mnt/wslg/PulseServer
 
 # WezTerm: emit OSC 7 on cwd change so Wezterm-Window-Tint retints live
+# Hostname must be "localhost", not $HOST/$(hostname) -- zsh auto-populates $HOST to the
+# real machine name, and WezTerm treats a non-matching host as remote, resolving new-tab
+# cwd through the /wsl.localhost/<distro>/... UNC form instead of the plain Linux path,
+# which fails chdir in the WSL relay process.
 _osc7_cwd() {
-  printf '\e]7;file://%s%s\e\\' "${HOST:-localhost}" "$PWD"
+  printf '\e]7;file://localhost%s\e\\' "$PWD"
 }
 autoload -Uz add-zsh-hook
 add-zsh-hook chpwd _osc7_cwd
