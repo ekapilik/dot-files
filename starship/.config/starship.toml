@@ -3,11 +3,14 @@
 format = """
 [](fg:#938AA9)\
 $os\
+$hostname\
+$container\
 [](fg:#938AA9 bg:#D27E99)\
 $directory\
 [](fg:#D27E99 bg:#C0A36E)\
 $git_branch\
 $git_status\
+$git_metrics\
 [](fg:#C0A36E bg:#6A9589)\
 $c\
 $cpp\
@@ -16,7 +19,9 @@ $nodejs\
 $python\
 [](fg:#6A9589 bg:#7FB4CA)\
 $docker_context\
-[](fg:#7FB4CA bg:#2D4F67)\
+[](fg:#7FB4CA bg:#658594)\
+$cmd_duration\
+[](fg:#658594 bg:#2D4F67)\
 $time\
 [ ](fg:#2D4F67)\
 $line_break\
@@ -28,6 +33,15 @@ $character\
 disabled = false
 style = "bg:#938AA9"
 format = '[ $symbol ]($style)'
+
+[hostname]
+ssh_only = true
+style = "bg:#938AA9"
+format = '[ $hostname ]($style)'
+
+[container]
+style = "bg:#938AA9"
+format = '[ $symbol$name ]($style)'
 
 [directory]
 style = "bg:#D27E99"
@@ -43,6 +57,12 @@ format = '[ $symbol $branch ]($style)'
 [git_status]
 style = "bg:#C0A36E"
 format = '[$all_status$ahead_behind ]($style)'
+
+[git_metrics]
+disabled = false
+added_style = "bold #98BB6C bg:#C0A36E"
+deleted_style = "bold #E82424 bg:#C0A36E"
+format = '([+$added ]($added_style))([-$deleted ]($deleted_style))'
 
 [c]
 symbol = " "
@@ -73,6 +93,11 @@ format = '[ $symbol ($version) ]($style)'
 symbol = " "
 style = "bg:#7FB4CA"
 format = '[ $symbol $context ]($style)'
+
+[cmd_duration]
+min_time = 2000
+style = "bg:#658594"
+format = '[ 󰔟 $duration ]($style)'
 
 [time]
 disabled = false
