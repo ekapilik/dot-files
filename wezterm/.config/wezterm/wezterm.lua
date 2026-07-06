@@ -22,7 +22,7 @@ config.font = wezterm.font('JetBrains Mono', { weight = 'Regular' })
 config.font_size = 12.0
 
 -- Windows Acrylic blur
-config.window_background_opacity = 0.9
+config.window_background_opacity = 0.3
 config.win32_system_backdrop = 'Acrylic'
 
 -- Tab bar
