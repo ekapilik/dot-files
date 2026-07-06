@@ -60,13 +60,13 @@ return dofile('\\\\wsl.localhost\\Ubuntu-24.04\\home\\eric\\dev\\.dot-files\\wez
 Loaded via WezTerm's built-in plugin manager (`wezterm.plugin.require`), which
 clones and caches each repo on first launch — no extra install step needed.
 
-- [Kanagawa](https://github.com/sravioli/kanagawa.wz) — theme, registers Wave/Dragon/Lotus variants. **Active by default.** On stable (non-nightly) WezTerm builds, `wezterm.lua` strips the `input_selector_label_*`/`launcher_label_*` palette keys this plugin bakes in — they're nightly-only fields and otherwise spam "not a valid Palette field" errors on every launch.
+- [Kanagawa](https://github.com/sravioli/kanagawa.wz) — theme, registers Wave/Dragon/Lotus variants. On stable (non-nightly) WezTerm builds, `wezterm.lua` strips the `input_selector_label_*`/`launcher_label_*` palette keys this plugin bakes in — they're nightly-only fields and otherwise spam "not a valid Palette field" errors on every launch.
 - [Rosé Pine](https://github.com/neapsix/wezterm) — theme, registers Main/Moon/Dawn variants.
 - Theme rotator — cycle WezTerm's built-in themes with `Super+Shift+N/P` (next/prev), `Super+Shift+R` (random), `Super+Shift+D` (back to default). Vendored inline in `wezterm.lua` rather than loaded from [wezterm-theme-rotator](https://github.com/koh-sh/wezterm-theme-rotator): upstream also hooks the status bar to show the current theme, which fights `wezterm-quota-limit` for the right status bar (both overwrite `set_right_status` on every refresh tick). The inlined version keeps only the keybindings + toast notifications, so quota owns the status bar outright.
 - [Wezterm-Window-Tint](https://github.com/willytop8/Wezterm-Window-Tint) — tints the window/tab bar per project based on git root.
 - [wezterm-quota-limit](https://github.com/EdenGibson/wezterm-quota-limit) — shows Claude Code API usage quota (5h/7d windows) in the right status bar. Reads credentials from the macOS Keychain or `~/.claude/.credentials.json`.
 
-To switch the active theme by hand, set `config.color_scheme` in `wezterm.lua` to any of `Kanagawa Wave`, `Kanagawa Dragon`, `Kanagawa Lotus`, `Rose Pine`, `Rose Pine Moon`, or `Rose Pine Dawn`, or any WezTerm built-in scheme.
+**Active by default:** `AtomOneLight`, a WezTerm built-in scheme (sourced from [iTerm2-Color-Schemes](https://github.com/mbadolato/iTerm2-Color-Schemes)). To switch the active theme by hand, set `config.color_scheme` in `wezterm.lua` to any of `Kanagawa Wave`, `Kanagawa Dragon`, `Kanagawa Lotus`, `Rose Pine`, `Rose Pine Moon`, `Rose Pine Dawn`, or any WezTerm built-in scheme.
 
 > **Known limitation:** the theme rotator only cycles WezTerm's *built-in* schemes (`wezterm.color.get_builtin_schemes()`) — it never sees the Kanagawa/Rosé Pine schemes registered into `config.color_schemes` above, so they won't show up in rotation.
 

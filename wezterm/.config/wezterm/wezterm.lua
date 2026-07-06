@@ -60,7 +60,7 @@ config.color_schemes['Rose Pine'] = rose_pine.main.colors()
 config.color_schemes['Rose Pine Moon'] = rose_pine.moon.colors()
 config.color_schemes['Rose Pine Dawn'] = rose_pine.dawn.colors()
 
-config.color_scheme = 'Kanagawa Wave'
+config.color_scheme = 'AtomOneLight'
 
 -- ============================================================
 -- Theme rotator: Super+Shift+N/P cycle themes, +R random, +D default.
