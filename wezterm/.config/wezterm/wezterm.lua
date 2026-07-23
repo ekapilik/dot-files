@@ -170,7 +170,8 @@ window_tint.apply_to_config(config, {
 local quota = wezterm.plugin.require 'https://github.com/EdenGibson/wezterm-quota-limit'
 quota.apply_to_config(config)
 
--- Ctrl+Shift+R: prompt to rename the current tab
+-- Ctrl+Shift+R: prompt to rename the current tab.
+-- Trailing space works around set_title dropping the last character.
 table.insert(config.keys, {
   key = 'r',
   mods = 'CTRL|SHIFT',
@@ -178,7 +179,7 @@ table.insert(config.keys, {
     description = 'Rename tab',
     action = wezterm.action_callback(function(window, _, line)
       if line then
-        window:active_tab():set_title(line)
+        window:active_tab():set_title(line .. ' ')
       end
     end),
   },
