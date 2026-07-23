@@ -104,11 +104,10 @@ do
     return 1
   end
 
-  local function apply_theme(window, new_index, operation_name)
+  local function apply_theme(window, new_index)
     current_index = new_index
     local theme_name = builtin_themes[current_index]
     window:set_config_overrides { color_scheme = theme_name }
-    window:toast_notification('WezTerm Theme', operation_name .. ': ' .. theme_name, nil, 4000)
   end
 
   config.keys = config.keys or {}
@@ -117,7 +116,7 @@ do
     key = 'n',
     mods = 'SUPER|SHIFT',
     action = wezterm.action_callback(function(window)
-      apply_theme(window, (current_index % #builtin_themes) + 1, 'Next theme')
+      apply_theme(window, (current_index % #builtin_themes) + 1)
     end),
   })
   table.insert(config.keys, {
@@ -128,7 +127,7 @@ do
       if new_index < 1 then
         new_index = #builtin_themes
       end
-      apply_theme(window, new_index, 'Previous theme')
+      apply_theme(window, new_index)
     end),
   })
   table.insert(config.keys, {
@@ -140,14 +139,14 @@ do
       while new_index == current_index do
         new_index = math.random(1, #builtin_themes)
       end
-      apply_theme(window, new_index, 'Random theme')
+      apply_theme(window, new_index)
     end),
   })
   table.insert(config.keys, {
     key = 'd',
     mods = 'SUPER|SHIFT',
     action = wezterm.action_callback(function(window)
-      apply_theme(window, find_index(default_theme), 'Default theme')
+      apply_theme(window, find_index(default_theme))
     end),
   })
 end
