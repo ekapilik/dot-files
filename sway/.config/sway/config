@@ -46,6 +46,10 @@ bindsym $mod+h     focus left
 bindsym $mod+semicolon focus right
 bindsym $mod+k     focus up
 bindsym $mod+j     focus down
+bindsym Mod1+a     focus left
+bindsym Mod1+d     focus right
+bindsym Mod1+w     focus up
+bindsym Mod1+s     focus down
 
 # Move
 bindsym $mod+Shift+Left  move left
