@@ -26,6 +26,12 @@ return {
   -- Treesitter
   { "nvim-treesitter/nvim-treesitter", lazy = false, build = ":TSUpdate" },
 
+  -- Rainbow bracket highlighting
+  "HiPhish/rainbow-delimiters.nvim",
+
+  -- Code folding
+  { "kevinhwang91/nvim-ufo", dependencies = { "kevinhwang91/promise-async" } },
+
   -- Status line
   {
     "nvim-lualine/lualine.nvim",
