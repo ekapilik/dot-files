@@ -3,7 +3,7 @@
     "position": "top",
     "modules-left": ["sway/workspaces", "sway/mode"],
     "modules-center": ["sway/window"],
-    "modules-right": ["tray", "pulseaudio", "network", "clock"],
+    "modules-right": ["tray", "pulseaudio", "network", "battery", "clock"],
 
     "sway/workspaces": {
         "disable-scroll": true
@@ -25,6 +25,16 @@
         "format-disconnected": "󰤭",
         "on-click": "nm-connection-editor",
         "tooltip-format": "{ipAddr}"
+    },
+
+    "battery": {
+        "format": "{icon} {capacity}%",
+        "format-charging": "󰂄 {capacity}%",
+        "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+        "states": {
+            "warning": 20,
+            "critical": 10
+        }
     },
 
     "clock": {
