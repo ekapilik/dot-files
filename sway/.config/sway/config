@@ -3,20 +3,8 @@ set $mod Mod4
 set $term wezterm
 set $menu wofi --show drun
 
-# ── Outputs ───────────────────────────────────────────────────────────────────
-output DP-6 position 0 0
-# Center: Dell S2725DSM — landscape
-output DP-7 resolution 2560x1440
-output DP-7 position 1440 741
-# Right: Laptop — HiDPI
-output eDP-1 resolution 3840x2400
-output eDP-1 scale 2
-output eDP-1 position 4000 1388
-
-# ── Workspaces ────────────────────────────────────────────────────────────────
-workspace 1 output DP-6
-workspace 2 output DP-7
-workspace 3 output eDP-1
+# ── Outputs / Workspaces ──────────────────────────────────────────────────────
+# Detected and configured dynamically in startup.sh
 
 # ── App assignments ───────────────────────────────────────────────────────────
 assign [app_id="slack"]                  workspace 1
