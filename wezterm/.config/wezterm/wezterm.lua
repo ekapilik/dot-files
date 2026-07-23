@@ -74,11 +74,10 @@ config.color_scheme = 'AtomOneLight'
 -- Vendored inline rather than loading
 -- https://github.com/koh-sh/wezterm-theme-rotator directly: upstream also
 -- hooks the status bar to show the current theme, which fights
--- wezterm-quota-limit for the right status bar (both overwrite
--- set_right_status on every refresh tick). This trimmed version keeps
--- only the keybindings + toast notifications so quota owns the status
--- bar outright. It still cycles WezTerm's built-in schemes only, not the
--- custom ones registered above.
+-- claude_burn for the right status bar (both overwrite set_right_status
+-- on every refresh tick). This trimmed version keeps only the keybindings
+-- + toast notifications so claude_burn owns the status bar outright.
+-- It still cycles WezTerm's built-in schemes only, not the custom ones above.
 -- ============================================================
 do
   local builtin_themes = {}
@@ -164,11 +163,11 @@ window_tint.apply_to_config(config, {
 })
 
 -- ============================================================
--- Claude usage quota in the right status bar
--- (https://github.com/EdenGibson/wezterm-quota-limit)
+-- Claude burn rate in the right status bar (local, no quota API needed)
+-- Shows rolling 1-hour token spend and cost across all Claude Code sessions.
 -- ============================================================
-local quota = wezterm.plugin.require 'https://github.com/EdenGibson/wezterm-quota-limit'
-quota.apply_to_config(config)
+local burn = require 'claude_burn'
+burn.apply_to_config(config)
 
 -- Ctrl+Shift+R: prompt to rename the current tab.
 -- Trailing space works around set_title dropping the last character.
