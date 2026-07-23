@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+# Save and restore tmux sessions, windows, and pane working directories.
+
+set -euo pipefail
+
+SAVE_FILE="${TMUX_SESSION_FILE:-$HOME/.local/share/tmux/session}"
+
+dump() {
+  local d=$'\t'
+  tmux list-windows -a -F "#S${d}#W${d}#{pane_current_path}"
+}
+
+save() {
+  tmux ls &>/dev/null || return 0
+  mkdir -p "$(dirname "$SAVE_FILE")"
+  dump > "$SAVE_FILE"
+}
+
+session_exists() {
+  tmux has-session -t "$1" 2>/dev/null
+}
+
+restore() {
+  [[ -f "$SAVE_FILE" ]] || { echo "no saved session at $SAVE_FILE" >&2; exit 1; }
+  tmux start-server
+  local count=0
+  while IFS=$'\t' read -r session_name window_name dir; do
+    [[ -d "$dir" ]] || continue
+    if session_exists "$session_name"; then
+      tmux new-window -d -t "${session_name}:" -n "$window_name" -c "$dir"
+    else
+      tmux new-session -d -s "$session_name" -n "$window_name" -c "$dir"
+      count=$(( count + 1 ))
+    fi
+  done < "$SAVE_FILE"
+  echo "restored $count sessions"
+}
+
+case "${1:-}" in
+  save)    save ;;
+  restore) restore ;;
+  dump)    dump ;;
+  *)
+    echo "usage: $(basename "$0") <save|restore|dump>" >&2
+    exit 1
+    ;;
+esac
