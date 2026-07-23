@@ -7,3 +7,4 @@ vim.o.expandtab = true
 vim.keymap.set("n", "<leader>wv", "<cmd>vsplit<cr>")
 vim.keymap.set("n", "<leader>wh", "<cmd>split<cr>")
 vim.keymap.set("n", "<leader>x", "<cmd>Explore<cr>")
+vim.keymap.set("n", "<leader>yp", function() vim.fn.setreg("+", vim.fn.expand("%:p")) end)
