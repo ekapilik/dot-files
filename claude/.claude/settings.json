@@ -1,5 +1,4 @@
 {
-  "theme": "dark",
   "hooks": {
     "PreToolUse": [
       {
@@ -24,5 +23,9 @@
         ]
       }
     ]
+  },
+  "theme": "dark",
+  "enabledPlugins": {
+    "clangd-lsp@claude-plugins-official": true
   }
 }
