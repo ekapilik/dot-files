@@ -4,16 +4,23 @@ local config = wezterm.config_builder()
 -- ============================================================
 -- WSL: default into Ubuntu-24.04
 -- ============================================================
-config.wsl_domains = {
-  {
-    name = 'WSL:Ubuntu-24.04',
-    distribution = 'Ubuntu-24.04',
-    username = 'eric',
-    default_cwd = '/home/eric',
-    default_prog = { '/usr/bin/zsh', '-l' },
-  },
-}
-config.default_domain = 'WSL:Ubuntu-24.04'
+--config.wsl_domains = {
+--  {
+--    name = 'WSL:Ubuntu-24.04',
+--    distribution = 'Ubuntu-24.04',
+--    username = 'eric',
+--    default_cwd = '/home/eric',
+--    default_prog = { '/usr/bin/zsh', '-l' },
+--  },
+--}
+--config.default_domain = 'WSL:Ubuntu-24.04'
+config.default_prog = { '/usr/bin/zsh', '-l' }
+
+-- OpenGL avoids the wp_linux_drm_syncobj_surface_v1 protocol error that wgpu/WebGpu
+-- triggers against Ubuntu 26.04's compositor (Mutter advertises explicit DRM sync;
+-- WezTerm 20240203's wgpu impl sends a malformed request → EPROTO crash).
+-- EGL/OpenGL bypasses that protocol entirely.
+config.front_end = 'OpenGL'
 
 -- ============================================================
 -- Appearance
@@ -22,7 +29,7 @@ config.font = wezterm.font('JetBrainsMono Nerd Font', { weight = 'Regular' })
 config.font_size = 12.0
 
 -- Windows Acrylic blur
-config.window_background_opacity = 0.3
+config.window_background_opacity = 0.9
 config.win32_system_backdrop = 'Acrylic'
 
 -- Tab bar
