@@ -1,0 +1,28 @@
+{
+  "theme": "dark",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "AskUserQuestion",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "XDG_RUNTIME_DIR=/run/user/$(id -u) PULSE_SERVER=unix:/mnt/wslg/PulseServer pw-play /usr/share/sounds/Yaru/stereo/dialog-question.oga 2>/dev/null || true",
+            "async": true
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "XDG_RUNTIME_DIR=/run/user/$(id -u) PULSE_SERVER=unix:/mnt/wslg/PulseServer pw-play /usr/share/sounds/Yaru/stereo/complete.oga 2>/dev/null || true",
+            "async": true
+          }
+        ]
+      }
+    ]
+  }
+}

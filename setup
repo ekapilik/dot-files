@@ -102,6 +102,14 @@ if [ -f "$HOME/.zshrc" ] && [ ! -L "$HOME/.zshrc" ]; then
   mv "$HOME/.zshrc" "$HOME/.zshrc.bak"
 fi
 stow -t $HOME zsh/
+
+# Back up Claude global settings if not already a symlink pointing into this repo
+if [ -f "$HOME/.claude/settings.json" ] && [ ! -L "$HOME/.claude/settings.json" ]; then
+  echo "Backing up existing ~/.claude/settings.json to ~/.claude/settings.json.bak"
+  cp "$HOME/.claude/settings.json" "$HOME/.claude/settings.json.bak"
+  rm "$HOME/.claude/settings.json"
+fi
+stow -t $HOME claude/
 popd
 
 # ensure local user directories exist
