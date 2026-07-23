@@ -1,22 +1,25 @@
 -- rustup comes first so rust-analyzer uses a sysroot that has rust-src installed.
--- pixi bin follows for C++ compiler tools (gcc, clang, etc.) used by clangd --query-driver.
-local pixi_bin = "/home/eric/dev/hmnd/hmnd_robot/.pixi/envs/default/bin"
+-- CLANGD_QUERY_DRIVER: set in ~/.hmnd-eric/zshrc to the pixi env bin dir for your project.
+local pixi_bin = vim.env.CLANGD_QUERY_DRIVER or ""
 local cargo_bin = vim.env.HOME .. "/.cargo/bin"
-vim.env.PATH = cargo_bin .. ":" .. pixi_bin .. ":" .. vim.env.PATH
+vim.env.PATH = cargo_bin .. (pixi_bin ~= "" and ":" .. pixi_bin or "") .. ":" .. vim.env.PATH
 
 require("mason").setup()
 require("mason-lspconfig").setup({
   ensure_installed = { "pyright", "lua_ls", "clangd", "cmake", "rust_analyzer" },
 })
 
+local clangd_cmd = {
+  "clangd",
+  "--background-index",
+  "--clang-tidy",
+}
+if pixi_bin ~= "" then
+  table.insert(clangd_cmd, "--query-driver=" .. pixi_bin .. "/*")
+end
+
 vim.lsp.config.clangd = {
-  cmd = {
-    "clangd",
-    "--background-index",
-    "--clang-tidy",
-    -- pixi env compilers so clangd resolves system headers correctly
-    "--query-driver=/home/eric/dev/hmnd/hmnd_robot/.pixi/envs/default/bin/*",
-  },
+  cmd = clangd_cmd,
   filetypes = { "c", "cpp", "objc", "objcpp" },
   root_markers = { ".clangd", "compile_commands.json", ".git" },
 }

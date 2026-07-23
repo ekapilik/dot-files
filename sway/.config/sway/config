@@ -69,8 +69,8 @@ bindsym XF86AudioPrev        exec playerctl previous
 bindsym Print exec grim -g "$(slurp)" ~/Pictures/screenshot-$(date +%Y%m%d-%H%M%S).png
 
 # Lock / suspend
-bindsym $mod+l             exec swaylock -f -i ~/Pictures/wallpaper/HMND_BETA_PI4_WALLPAPER.png
-bindsym $mod+Shift+l       exec swaylock -f -i ~/Pictures/wallpaper/HMND_BETA_PI4_WALLPAPER.png && sleep 2 && systemctl suspend
+bindsym $mod+l             exec swaylock -f -i ~/Pictures/wallpaper/lock.png
+bindsym $mod+Shift+l       exec swaylock -f -i ~/Pictures/wallpaper/lock.png && sleep 2 && systemctl suspend
 
 # Reload config / exit
 bindsym $mod+Shift+r reload
