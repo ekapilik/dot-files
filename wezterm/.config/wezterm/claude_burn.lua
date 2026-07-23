@@ -44,8 +44,9 @@ end
 local function build_status(data)
   local h = data.hour or {}
   local d = data.day  or {}
+  local w = data.week or {}
   local sep = fg('80;80;80', ' | ')
-  return ' ' .. fmt_window(h, '/h', 2, 8) .. sep .. fmt_window(d, '/d', 10, 40) .. ' '
+  return ' ' .. fmt_window(h, '/h', 2, 8) .. sep .. fmt_window(d, '/d', 10, 40) .. sep .. fmt_window(w, '/w', 50, 200) .. ' '
 end
 
 local function refresh()

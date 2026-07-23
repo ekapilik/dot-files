@@ -41,14 +41,16 @@ def main():
     now = time.time()
     cutoff_1h  = now - 3600
     cutoff_day = day_start_ts(now)
-    # scan files touched since the earlier of the two cutoffs (minus buffer)
-    cutoff_mtime = min(cutoff_1h, cutoff_day) - 300
+    cutoff_week = now - (7 * 86400)
+    # scan files touched since the earliest cutoff (minus buffer)
+    cutoff_mtime = min(cutoff_1h, cutoff_day, cutoff_week) - 300
 
     hour = empty_bucket()
     day  = empty_bucket()
+    week = empty_bucket()
 
     if not os.path.isdir(PROJECTS_DIR):
-        print(json.dumps({'hour': {**hour, 'cost': 0.0}, 'day': {**day, 'cost': 0.0}}))
+        print(json.dumps({'hour': {**hour, 'cost': 0.0}, 'day': {**day, 'cost': 0.0}, 'week': {**week, 'cost': 0.0}}))
         return
 
     for project in os.scandir(PROJECTS_DIR):
@@ -92,12 +94,15 @@ def main():
                             add_usage(hour, usage)
                         if ts >= cutoff_day:
                             add_usage(day, usage)
+                        if ts >= cutoff_week:
+                            add_usage(week, usage)
             except OSError:
                 continue
 
     print(json.dumps({
         'hour': {**hour, 'cost': cost(hour)},
         'day':  {**day,  'cost': cost(day)},
+        'week': {**week, 'cost': cost(week)},
     }))
 
 if __name__ == '__main__':
