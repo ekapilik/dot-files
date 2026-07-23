@@ -23,14 +23,18 @@ telescope.load_extension("file_browser")
 
 ------------ Key Mappings for development ------------
 
--- Go to definition (Telescope)
-vim.keymap.set("n", "gd", require("telescope.builtin").lsp_definitions, { desc = "LSP Go to Definition" })
+-- Go to definition: use native vim.lsp (telescope lsp_definitions broke in nvim 0.12-dev)
+vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "LSP Go to Definition" })
 
 -- References (Telescope)
 vim.keymap.set("n", "gr", require("telescope.builtin").lsp_references, { desc = "LSP See References" })
 
 -- Implementations (Telescope)
 vim.keymap.set("n", "gi", require("telescope.builtin").lsp_implementations, { desc = "LSP See Implementations" })
+
+-- Symbols
+vim.keymap.set("n", "<leader>ss", require("telescope.builtin").lsp_document_symbols, { desc = "Document symbols" })
+vim.keymap.set("n", "<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, { desc = "Workspace symbols" })
 
 -- Symbol rename
 vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "LSP Rename" })

@@ -1,12 +1,38 @@
+-- rustup comes first so rust-analyzer uses a sysroot that has rust-src installed.
+-- pixi bin follows for C++ compiler tools (gcc, clang, etc.) used by clangd --query-driver.
+local pixi_bin = "/home/eric/dev/hmnd/hmnd_robot/.pixi/envs/default/bin"
+local cargo_bin = vim.env.HOME .. "/.cargo/bin"
+vim.env.PATH = cargo_bin .. ":" .. pixi_bin .. ":" .. vim.env.PATH
+
 require("mason").setup()
 require("mason-lspconfig").setup({
-  ensure_installed = { "pyright", "lua_ls", "clangd", "cmake" },
+  ensure_installed = { "pyright", "lua_ls", "clangd", "cmake", "rust_analyzer" },
 })
 
 vim.lsp.config.clangd = {
-  cmd = { "clangd" },
+  cmd = {
+    "clangd",
+    "--background-index",
+    "--clang-tidy",
+    -- pixi env compilers so clangd resolves system headers correctly
+    "--query-driver=/home/eric/dev/hmnd/hmnd_robot/.pixi/envs/default/bin/*",
+  },
   filetypes = { "c", "cpp", "objc", "objcpp" },
-  root_markers = { "compile_commands.json", ".git" },
+  root_markers = { ".clangd", "compile_commands.json", "CMakeLists.txt", ".git" },
+}
+
+-- "rust_analyzer" (underscore) matches nvim-lspconfig's lsp/rust_analyzer.lua,
+-- which provides cargo-metadata-based root detection and before_init wiring.
+vim.lsp.config["rust_analyzer"] = {
+  -- cmd intentionally omitted: uses rust-analyzer from PATH (rustup's, which has rust-src)
+  settings = {
+    ["rust-analyzer"] = {
+      cargo = { allFeatures = true },
+      checkOnSave = true,
+      check = { command = "clippy" },
+      procMacro = { enable = true },
+    },
+  },
 }
 
 vim.lsp.config.cmake = {
@@ -25,7 +51,7 @@ vim.lsp.config.lua_ls = {
   },
 }
 
-vim.lsp.enable({ "pyright", "clangd", "cmake", "lua_ls" })
+vim.lsp.enable({ "pyright", "clangd", "cmake", "lua_ls", "rust_analyzer" })
 
 -- Hover window styling
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
