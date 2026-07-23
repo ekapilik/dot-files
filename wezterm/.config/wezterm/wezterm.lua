@@ -4,16 +4,23 @@ local config = wezterm.config_builder()
 -- ============================================================
 -- WSL: default into Ubuntu-24.04
 -- ============================================================
-config.wsl_domains = {
-  {
-    name = 'WSL:Ubuntu-24.04',
-    distribution = 'Ubuntu-24.04',
-    username = 'eric',
-    default_cwd = '/home/eric',
-    default_prog = { '/usr/bin/zsh', '-l' },
-  },
-}
-config.default_domain = 'WSL:Ubuntu-24.04'
+--config.wsl_domains = {
+--  {
+--    name = 'WSL:Ubuntu-24.04',
+--    distribution = 'Ubuntu-24.04',
+--    username = 'eric',
+--    default_cwd = '/home/eric',
+--    default_prog = { '/usr/bin/zsh', '-l' },
+--  },
+--}
+--config.default_domain = 'WSL:Ubuntu-24.04'
+config.default_prog = { '/usr/bin/zsh', '-l' }
+
+-- OpenGL avoids the wp_linux_drm_syncobj_surface_v1 protocol error that wgpu/WebGpu
+-- triggers against Ubuntu 26.04's compositor (Mutter advertises explicit DRM sync;
+-- WezTerm 20240203's wgpu impl sends a malformed request → EPROTO crash).
+-- EGL/OpenGL bypasses that protocol entirely.
+config.front_end = 'OpenGL'
 
 -- ============================================================
 -- Appearance
@@ -22,7 +29,7 @@ config.font = wezterm.font('JetBrainsMono Nerd Font', { weight = 'Regular' })
 config.font_size = 12.0
 
 -- Windows Acrylic blur
-config.window_background_opacity = 0.3
+config.window_background_opacity = 0.9
 config.win32_system_backdrop = 'Acrylic'
 
 -- Tab bar
@@ -67,11 +74,10 @@ config.color_scheme = 'AtomOneLight'
 -- Vendored inline rather than loading
 -- https://github.com/koh-sh/wezterm-theme-rotator directly: upstream also
 -- hooks the status bar to show the current theme, which fights
--- wezterm-quota-limit for the right status bar (both overwrite
--- set_right_status on every refresh tick). This trimmed version keeps
--- only the keybindings + toast notifications so quota owns the status
--- bar outright. It still cycles WezTerm's built-in schemes only, not the
--- custom ones registered above.
+-- claude_burn for the right status bar (both overwrite set_right_status
+-- on every refresh tick). This trimmed version keeps only the keybindings
+-- + toast notifications so claude_burn owns the status bar outright.
+-- It still cycles WezTerm's built-in schemes only, not the custom ones above.
 -- ============================================================
 do
   local builtin_themes = {}
@@ -98,11 +104,10 @@ do
     return 1
   end
 
-  local function apply_theme(window, new_index, operation_name)
+  local function apply_theme(window, new_index)
     current_index = new_index
     local theme_name = builtin_themes[current_index]
     window:set_config_overrides { color_scheme = theme_name }
-    window:toast_notification('WezTerm Theme', operation_name .. ': ' .. theme_name, nil, 4000)
   end
 
   config.keys = config.keys or {}
@@ -111,7 +116,7 @@ do
     key = 'n',
     mods = 'SUPER|SHIFT',
     action = wezterm.action_callback(function(window)
-      apply_theme(window, (current_index % #builtin_themes) + 1, 'Next theme')
+      apply_theme(window, (current_index % #builtin_themes) + 1)
     end),
   })
   table.insert(config.keys, {
@@ -122,7 +127,7 @@ do
       if new_index < 1 then
         new_index = #builtin_themes
       end
-      apply_theme(window, new_index, 'Previous theme')
+      apply_theme(window, new_index)
     end),
   })
   table.insert(config.keys, {
@@ -134,14 +139,14 @@ do
       while new_index == current_index do
         new_index = math.random(1, #builtin_themes)
       end
-      apply_theme(window, new_index, 'Random theme')
+      apply_theme(window, new_index)
     end),
   })
   table.insert(config.keys, {
     key = 'd',
     mods = 'SUPER|SHIFT',
     action = wezterm.action_callback(function(window)
-      apply_theme(window, find_index(default_theme), 'Default theme')
+      apply_theme(window, find_index(default_theme))
     end),
   })
 end
@@ -157,10 +162,25 @@ window_tint.apply_to_config(config, {
 })
 
 -- ============================================================
--- Claude usage quota in the right status bar
--- (https://github.com/EdenGibson/wezterm-quota-limit)
+-- Claude burn rate in the right status bar (local, no quota API needed)
+-- Shows rolling 1-hour token spend and cost across all Claude Code sessions.
 -- ============================================================
-local quota = wezterm.plugin.require 'https://github.com/EdenGibson/wezterm-quota-limit'
-quota.apply_to_config(config)
+local burn = require 'claude_burn'
+burn.apply_to_config(config)
+
+-- Ctrl+Shift+R: prompt to rename the current tab.
+-- Trailing space works around set_title dropping the last character.
+table.insert(config.keys, {
+  key = 'r',
+  mods = 'CTRL|SHIFT',
+  action = wezterm.action.PromptInputLine {
+    description = 'Rename tab',
+    action = wezterm.action_callback(function(window, _, line)
+      if line then
+        window:active_tab():set_title(line .. ' ')
+      end
+    end),
+  },
+})
 
 return config

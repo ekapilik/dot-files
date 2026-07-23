@@ -26,6 +26,12 @@ return {
   -- Treesitter
   { "nvim-treesitter/nvim-treesitter", lazy = false, build = ":TSUpdate" },
 
+  -- Rainbow bracket highlighting
+  "HiPhish/rainbow-delimiters.nvim",
+
+  -- Code folding
+  { "kevinhwang91/nvim-ufo", dependencies = { "kevinhwang91/promise-async" } },
+
   -- Status line
   {
     "nvim-lualine/lualine.nvim",
@@ -34,6 +40,20 @@ return {
 
   -- Colorscheme
   "folke/tokyonight.nvim",
+
+  -- GitHub PR review
+  {
+    "pwntester/octo.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim",
+      "nvim-tree/nvim-web-devicons",
+    },
+  },
+  {
+    "sindrets/diffview.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+  },
 
   -- LeetCode
   {

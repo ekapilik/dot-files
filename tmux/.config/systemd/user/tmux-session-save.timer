@@ -1,0 +1,9 @@
+[Unit]
+Description=Save tmux session state every 60 seconds
+
+[Timer]
+OnBootSec=60
+OnUnitActiveSec=60
+
+[Install]
+WantedBy=timers.target

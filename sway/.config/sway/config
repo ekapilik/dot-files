@@ -1,0 +1,84 @@
+# Modifier key (Super/Windows)
+set $mod Mod4
+set $term wezterm
+set $menu wofi --show drun
+
+# ── Outputs / Workspaces ──────────────────────────────────────────────────────
+# Detected and configured dynamically in startup.sh
+
+# ── App assignments ───────────────────────────────────────────────────────────
+assign [app_id="slack"]                  workspace 1
+assign [class="Spotify"]                 workspace 1
+assign [app_id="org.wezfurlong.wezterm"] workspace 2
+assign [app_id="firefox_firefox"]        workspace 3
+
+# ── Startup ───────────────────────────────────────────────────────────────────
+exec ~/.config/sway/startup.sh
+
+# ── Key bindings ──────────────────────────────────────────────────────────────
+# Launch
+bindsym $mod+Return exec $term
+bindsym $mod+d      exec $menu
+
+# Window
+bindsym $mod+Shift+q     kill
+bindsym $mod+f           fullscreen toggle
+bindsym $mod+Shift+space floating toggle
+
+# Focus — arrow keys and vim keys
+bindsym $mod+Left  focus left
+bindsym $mod+Right focus right
+bindsym $mod+Up    focus up
+bindsym $mod+Down  focus down
+bindsym $mod+h     focus left
+bindsym $mod+semicolon focus right
+bindsym $mod+k     focus up
+bindsym $mod+j     focus down
+bindsym Mod1+a     focus left
+bindsym Mod1+d     focus right
+bindsym Mod1+w     focus up
+bindsym Mod1+s     focus down
+bindsym Mod1+Shift+a move left
+bindsym Mod1+Shift+d move right
+bindsym Mod1+Shift+w move up
+bindsym Mod1+Shift+s move down
+
+# Move
+bindsym $mod+Shift+Left  move left
+bindsym $mod+Shift+Right move right
+bindsym $mod+Shift+Up    move up
+bindsym $mod+Shift+Down  move down
+
+# Workspaces
+bindsym $mod+1 workspace number 1
+bindsym $mod+2 workspace number 2
+bindsym $mod+3 workspace number 3
+bindsym $mod+Shift+1 move container to workspace number 1
+bindsym $mod+Shift+2 move container to workspace number 2
+bindsym $mod+Shift+3 move container to workspace number 3
+
+# Media keys
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioMute        exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioPlay        exec playerctl play-pause
+bindsym XF86AudioNext        exec playerctl next
+bindsym XF86AudioPrev        exec playerctl previous
+
+# Screenshot — select region, save to ~/Pictures
+bindsym Print exec grim -g "$(slurp)" ~/Pictures/screenshot-$(date +%Y%m%d-%H%M%S).png
+
+# Lock / suspend
+bindsym $mod+l             exec swaylock -f -i ~/Pictures/wallpaper/lock.png
+bindsym $mod+Shift+l       exec swaylock -f -i ~/Pictures/wallpaper/lock.png && sleep 2 && systemctl suspend
+
+# Reload config / exit
+bindsym $mod+Shift+r reload
+bindsym $mod+Shift+e exec swaynag -t warning -m 'Exit sway?' -B 'Yes' 'swaymsg exit'
+
+# ── Appearance ────────────────────────────────────────────────────────────────
+gaps inner 8
+default_border pixel 2
+
+# ── Status bar ────────────────────────────────────────────────────────────────
+exec_always sh -c 'pkill -x waybar; waybar'

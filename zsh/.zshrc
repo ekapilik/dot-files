@@ -88,3 +88,7 @@ alias ct='cargo test'
 # Misc
 alias rb='glow -p'
 alias cldev='claude --permission-mode acceptEdits "/good-dev"'
+
+export PATH="/home/eric/.pixi/bin:$PATH"
+
+[[ -f ~/.hmnd-eric/zshrc ]] && source ~/.hmnd-eric/zshrc

@@ -1,0 +1,45 @@
+{
+    "layer": "top",
+    "position": "top",
+    "modules-left": ["sway/workspaces", "sway/mode"],
+    "modules-center": ["sway/window"],
+    "modules-right": ["tray", "pulseaudio", "network", "battery", "custom/clock"],
+
+    "sway/workspaces": {
+        "disable-scroll": true
+    },
+
+    "tray": {
+        "spacing": 8
+    },
+
+    "pulseaudio": {
+        "format": "󰕾 {volume}%",
+        "format-muted": "󰖁",
+        "on-click": "pavucontrol"
+    },
+
+    "network": {
+        "format-wifi": "󰤨 {essid}",
+        "format-ethernet": "󰈀 {ifname}",
+        "format-disconnected": "󰤭",
+        "on-click": "nm-connection-editor",
+        "tooltip-format": "{ipAddr}"
+    },
+
+    "battery": {
+        "format": "{icon} {capacity}%",
+        "format-charging": "󰂄 {capacity}%",
+        "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+        "states": {
+            "warning": 20,
+            "critical": 10
+        }
+    },
+
+    "custom/clock": {
+        "exec": "date +'%Y-%m-%d %H:%M'",
+        "interval": 30,
+        "format": "{}"
+    }
+}

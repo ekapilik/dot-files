@@ -1,0 +1,47 @@
+{
+  "hooks": {
+    "PermissionRequest": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "XDG_RUNTIME_DIR=/run/user/$(id -u) DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$(id -u)/bus pw-play /usr/share/sounds/Yaru/stereo/dialog-warning.oga 2>/dev/null || true",
+            "async": true
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "AskUserQuestion",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "XDG_RUNTIME_DIR=/run/user/$(id -u) DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$(id -u)/bus pw-play /usr/share/sounds/Yaru/stereo/dialog-question.oga 2>/dev/null || true",
+            "async": true
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "XDG_RUNTIME_DIR=/run/user/$(id -u) DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$(id -u)/bus pw-play /usr/share/sounds/Yaru/stereo/complete.oga 2>/dev/null || true",
+            "async": true
+          },
+          {
+            "type": "command",
+            "command": "python3 -c \"\nimport glob, json, os, re, subprocess\nsid = os.environ.get('CLAUDE_CODE_SESSION_ID', '')\nfiles = glob.glob(os.path.expanduser(f'~/.claude/projects/**/{sid}.jsonl'), recursive=True)\nif not files: exit()\ncache = max((int(m.group(1)) for line in open(files[0]) for m in [re.search(r'\\\"cache_read_input_tokens\\\":(\\d+)', line)] if m), default=0)\nif cache > 80000:\n    proj = ''\n    title = sid[:8]\n    try:\n        hist = os.path.expanduser('~/.claude/history.jsonl')\n        for line in open(hist):\n            e = json.loads(line)\n            if e.get('sessionId') == sid:\n                proj = os.path.basename(e.get('project', ''))\n                title = (e.get('display', '') or sid)[:60]\n                break\n    except: pass\n    u = os.getuid()\n    e = {**os.environ, 'XDG_RUNTIME_DIR': f'/run/user/{u}', 'DBUS_SESSION_BUS_ADDRESS': f'unix:path=/run/user/{u}/bus'}\n    body = f'{cache:,} cached tokens — consider /clear\\n{proj}: {title}'\n    subprocess.run(['notify-send', '-u', 'normal', '-i', 'dialog-warning', 'Claude Code', body], env=e, capture_output=True)\n\" 2>/dev/null || true",
+            "async": true
+          }
+        ]
+      }
+    ]
+  },
+  "enabledPlugins": {
+    "clangd-lsp@claude-plugins-official": true
+  },
+  "theme": "dark"
+}
