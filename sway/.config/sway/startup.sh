@@ -34,12 +34,14 @@ systemctl --user start xdg-desktop-portal &
 swaymsg "output $LEFT_VERTICAL transform 270"
 swaymsg 'workspace 1; layout splitv'
 
-nm-applet --indicator &
-blueman-applet &
-spotify &
-slack &
-wezterm &
-firefox &
+launch() { pgrep -f "$1" > /dev/null || "$@" & }
+
+launch nm-applet --indicator
+launch blueman-applet
+launch spotify
+launch slack
+launch wezterm
+launch firefox
 
 # Wait for both workspace 1 apps to be in the tree, then put Spotify below Slack.
 wait_for_app '"app_id": "slack"' && \
