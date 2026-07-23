@@ -18,7 +18,7 @@ vim.lsp.config.clangd = {
     "--query-driver=/home/eric/dev/hmnd/hmnd_robot/.pixi/envs/default/bin/*",
   },
   filetypes = { "c", "cpp", "objc", "objcpp" },
-  root_markers = { ".clangd", "compile_commands.json", "CMakeLists.txt", ".git" },
+  root_markers = { ".clangd", "compile_commands.json", ".git" },
 }
 
 -- "rust_analyzer" (underscore) matches nvim-lspconfig's lsp/rust_analyzer.lua,
