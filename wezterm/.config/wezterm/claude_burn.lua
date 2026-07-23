@@ -2,10 +2,13 @@ local wezterm = require 'wezterm'
 local M = {}
 
 local POLL_INTERVAL = 60  -- seconds between script invocations
+local CYCLE_INTERVAL = 5  -- seconds between view rotations
 local SCRIPT = os.getenv('HOME') .. '/.config/wezterm/claude_burn_rate.py'
 
 local last_run = 0
+local cycle_start = 0
 local cached_status = ''
+local cached_data = {}
 
 local function fmt_tokens(n)
   if n >= 1000000 then
@@ -41,12 +44,16 @@ local function fmt_window(b, label, lo, hi)
   return cost_colored .. ' ' .. tokens_str
 end
 
-local function build_status(data)
-  local h = data.hour or {}
-  local d = data.day  or {}
-  local w = data.week or {}
-  local sep = fg('80;80;80', ' | ')
-  return ' ' .. fmt_window(h, '/h', 2, 8) .. sep .. fmt_window(d, '/d', 10, 40) .. sep .. fmt_window(w, '/w', 50, 200) .. ' '
+local function build_status(data, view_index)
+  local views = {
+    {key = 'hour',  label = '/h', lo = 2,   hi = 8},
+    {key = 'day',   label = '/d', lo = 10,  hi = 40},
+    {key = 'week',  label = '/w', lo = 50,  hi = 200},
+    {key = 'month', label = '/m', lo = 100, hi = 500},
+  }
+  local view = views[view_index]
+  local bucket = data[view.key] or {}
+  return ' ' .. fmt_window(bucket, view.label, view.lo, view.hi) .. ' '
 end
 
 local function refresh()
@@ -61,7 +68,7 @@ local function refresh()
   end
   local data = wezterm.json_parse(stdout)
   if data then
-    cached_status = build_status(data)
+    cached_data = data
   end
 end
 
@@ -71,8 +78,13 @@ function M.apply_to_config(_config)
     if now - last_run >= POLL_INTERVAL then
       last_run = now
       refresh()
+      cycle_start = now
     end
-    -- window_tint owns set_left_status; we own set_right_status
+
+    local elapsed = now - cycle_start
+    local view_index = (math.floor(elapsed / CYCLE_INTERVAL) % 4) + 1
+
+    cached_status = build_status(cached_data, view_index)
     window:set_right_status(cached_status)
   end)
 end
