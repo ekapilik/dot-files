@@ -1,6 +1,0 @@
-[submodule "claude/.claude/skill-repos/ponytail"]
-	path = claude/.claude/skill-repos/ponytail
-	url = git@github.com:DietrichGebert/ponytail.git
-[submodule "claude/.claude/skill-repos/mattpocock-skills"]
-	path = claude/.claude/skill-repos/mattpocock-skills
-	url = git@github.com:mattpocock/skills.git
