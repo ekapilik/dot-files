@@ -4,7 +4,7 @@ set $term wezterm
 set $menu wofi --show drun
 
 # ── Outputs ───────────────────────────────────────────────────────────────────
-output DP-6 enable
+output DP-6 position 0 0
 # Center: Dell S2725DSM — landscape
 output DP-7 resolution 2560x1440
 output DP-7 position 1440 741
@@ -81,13 +81,4 @@ gaps inner 8
 default_border pixel 2
 
 # ── Status bar ────────────────────────────────────────────────────────────────
-bar {
-    position top
-    status_command while date +'%Y-%m-%d %H:%M'; do sleep 1; done
-    colors {
-        statusline #ffffff
-        background #1e1e2e
-        focused_workspace  #cba6f7 #cba6f7 #1e1e2e
-        inactive_workspace #1e1e2e #1e1e2e #6c7086
-    }
-}
+exec_always sh -c 'pkill -x waybar; waybar'
