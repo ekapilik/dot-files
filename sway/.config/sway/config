@@ -43,7 +43,7 @@ bindsym $mod+Right focus right
 bindsym $mod+Up    focus up
 bindsym $mod+Down  focus down
 bindsym $mod+h     focus left
-bindsym $mod+l     focus right
+bindsym $mod+semicolon focus right
 bindsym $mod+k     focus up
 bindsym $mod+j     focus down
 
@@ -71,6 +71,10 @@ bindsym XF86AudioPrev        exec playerctl previous
 
 # Screenshot — select region, save to ~/Pictures
 bindsym Print exec grim -g "$(slurp)" ~/Pictures/screenshot-$(date +%Y%m%d-%H%M%S).png
+
+# Lock / suspend
+bindsym $mod+l             exec swaylock -f -i ~/Pictures/wallpaper/HMND_BETA_PI4_WALLPAPER.png
+bindsym $mod+Shift+l       exec swaylock -f -i ~/Pictures/wallpaper/HMND_BETA_PI4_WALLPAPER.png && sleep 2 && systemctl suspend
 
 # Reload config / exit
 bindsym $mod+Shift+r reload
