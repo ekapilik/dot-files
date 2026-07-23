@@ -3,7 +3,7 @@
     "position": "top",
     "modules-left": ["sway/workspaces", "sway/mode"],
     "modules-center": ["sway/window"],
-    "modules-right": ["tray", "pulseaudio", "network", "battery", "clock"],
+    "modules-right": ["tray", "pulseaudio", "network", "battery", "custom/clock"],
 
     "sway/workspaces": {
         "disable-scroll": true
@@ -37,7 +37,9 @@
         }
     },
 
-    "clock": {
-        "format": "{:%Y-%m-%d %H:%M}"
+    "custom/clock": {
+        "exec": "date +'%Y-%m-%d %H:%M'",
+        "interval": 30,
+        "format": "{}"
     }
 }
