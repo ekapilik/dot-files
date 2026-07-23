@@ -50,6 +50,10 @@ bindsym Mod1+a     focus left
 bindsym Mod1+d     focus right
 bindsym Mod1+w     focus up
 bindsym Mod1+s     focus down
+bindsym Mod1+Shift+a move left
+bindsym Mod1+Shift+d move right
+bindsym Mod1+Shift+w move up
+bindsym Mod1+Shift+s move down
 
 # Move
 bindsym $mod+Shift+Left  move left
